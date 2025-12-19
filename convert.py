@@ -192,6 +192,8 @@ if __name__ == "__main__":
     }
 
     session = Session.builder.configs(connection_parameters).create()
+    print("Snowflake session created successfully")
+
 
     result_df = main(session)
     result_df.show()
