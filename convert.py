@@ -99,11 +99,16 @@ def clean_script(script_path):
 def build_dynamic_header(dynamic_imports):
     imports_block = "\n".join(dynamic_imports)
     snowflake_core = """
-from snowflake.snowpark import Session, functions as F
-from snowflake.snowpark.functions import col, count, sum as sum_, countDistinct, coalesce, lit, when
+import os
+import sys
 import uuid
 import time
 import traceback
+
+from snowflake.snowpark import Session, functions as F
+from snowflake.snowpark.functions import (
+    col, count, sum as sum_, countDistinct, coalesce, lit, when
+)
 """
 
     main_def = """
@@ -123,8 +128,7 @@ def log_operation(session, status, error_message='', run_id=None, script_name=No
 
 
 def main(session):
-    import os
-    import sys
+
     script_name = os.path.basename(__file__)
     run_id = str(uuid.uuid4())
     log_operation(session, status="STARTED", run_id=run_id, script_name=script_name)
