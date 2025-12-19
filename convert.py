@@ -66,7 +66,7 @@ def extract_imports(script_path):
 # STEP 3: FILTER SNOWFLAKE-SAFE IMPORTS
 # =========================================================
 def filter_safe_imports(imports):
-    blocked = ("pyspark", "spark", "databricks", "display", "streamlit", "os", "sys")
+    blocked = ("pyspark", "spark", "databricks", "display", "streamlit")
     return [imp for imp in imports if not any(b in imp.lower() for b in blocked)]
 
 
