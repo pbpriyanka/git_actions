@@ -66,8 +66,18 @@ def extract_imports(script_path):
 # STEP 3: FILTER SNOWFLAKE-SAFE IMPORTS
 # =========================================================
 def filter_safe_imports(imports):
-    blocked = ("pyspark", "spark", "databricks", "display", "streamlit")
+    blocked = (
+        "pyspark",
+        "spark",
+        "databricks",
+        "dbutils",
+        "display",
+        "streamlit",
+        "snowflake.snowpark.context",
+        "get_active_session"
+    )
     return [imp for imp in imports if not any(b in imp.lower() for b in blocked)]
+
 
 
 # =========================================================
@@ -106,6 +116,8 @@ import time
 import traceback
 
 from snowflake.snowpark import Session, functions as F
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
 from snowflake.snowpark.functions import (
     col, count, sum as sum_, countDistinct, coalesce, lit, when
 )
@@ -157,14 +169,30 @@ def main(session):
 
 
 if __name__ == "__main__":
+    private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
+
+    private_key = serialization.load_pem_private_key(
+        private_key_pem,
+        password=None,
+        backend=default_backend()
+    )
+
+    private_key_der = private_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption()
+    )
+
     connection_parameters = {
-    "account": os.getenv("SNOWFLAKE_ACCOUNT"),
-    "user": os.getenv("SNOWFLAKE_USER"),
-    "role": os.getenv("SNOWFLAKE_ROLE"),
-    "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
-    "private_key_path": os.getenv("SNOWFLAKE_PRIVATE_KEY_PATH"),
-}
+        "account": os.environ["SNOWFLAKE_ACCOUNT"],
+        "user": os.environ["SNOWFLAKE_USER"],
+        "private_key": private_key_der,
+        "role": os.environ["SNOWFLAKE_ROLE"],
+        "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
+    }
+
     session = Session.builder.configs(connection_parameters).create()
+
     result_df = main(session)
     result_df.show()
     session.close()
