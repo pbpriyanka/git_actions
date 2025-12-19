@@ -23,7 +23,7 @@ def get_snowflake_session():
         "account": os.environ["SNOWFLAKE_ACCOUNT"],
         "user": os.environ["SNOWFLAKE_USER"],
         "role": os.environ["SNOWFLAKE_ROLE"],
-        "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"]
+        "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
         "private_key": private_key_der
     }
 
