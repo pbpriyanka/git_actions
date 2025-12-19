@@ -6,7 +6,6 @@ import uuid
 import time
 import traceback
 import nbformat
-from nbformat import normalize
 
 # =========================================================
 # CONFIGURATION
@@ -20,25 +19,28 @@ os.makedirs(SCRIPTS_DIR, exist_ok=True)
 # STEP 1: CLEAN DATABRICKS METADATA
 # =========================================================
 def clean_databricks_metadata(notebook_path):
+
     """Fully sanitize Databricks notebook so nbconvert never fails."""
     with open(notebook_path, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
     for cell in nb.cells:
-        # Remove invalid fields
+        # Remove problematic IDs
         cell.pop("id", None)
 
-        # Only code cells are allowed to have outputs
+        # Markdown / raw cells must not have outputs
         if cell.cell_type != "code":
             cell.pop("outputs", None)
             cell.pop("execution_count", None)
 
-        # Remove Databricks metadata
+        # Code cells: outputs are allowed but can be safely removed
+        if cell.cell_type == "code":
+            cell["outputs"] = []
+            cell["execution_count"] = None
+
+        # Remove Databricks-specific metadata
         if "metadata" in cell:
             cell["metadata"].pop("application/vnd.databricks.v1+cell", None)
-
-    # Normalize notebook (fixes missing IDs warning)
-    nb, _ = normalize(nb)
 
     cleaned_path = notebook_path.replace(".ipynb", "_cleaned.ipynb")
     with open(cleaned_path, "w", encoding="utf-8") as f:
