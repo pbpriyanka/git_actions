@@ -30,18 +30,11 @@ jobs:
         run: |
           set -e
           echo "🚀 Running convert_ipynb_to_py.py"
-          python scripts/convert_ipynb_to_py.py
+          python convert.py
 
-      - name: Create Snowflake tasks
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+      - name: Validate converted script exists
         run: |
-          echo "🚀 Running create_tasks.py"
-          python scripts/create_tasks.py
+          test -f scripts/data_harmonization.py
 
       - name: Run converted Snowflake script
         env:
