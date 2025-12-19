@@ -1,4 +1,5 @@
-name: Convert Notebooks and Run on Snowflake
+# .github/workflows/test_run_scripts.yml
+name: Test Converted Scripts on Snowflake
 
 on:
   push:
@@ -6,18 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  convert-and-run:
+  run-scripts:
     runs-on: ubuntu-latest
-
     env:
       SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
       SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
       SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+      CI: "true"  # optional: safe exit if no creds
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -30,11 +33,11 @@ jobs:
           pip install --upgrade pip
           pip install snowflake-snowpark-python pandas numpy nbformat jupyter nbconvert
 
-      - name: Convert notebooks to Snowflake scripts
+      - name: Convert notebooks to scripts
         run: |
-          python convert.py
+          python scripts/convert.py
 
-      - name: Run converted scripts on Snowflake
+      - name: Run converted scripts
         run: |
           for script in scripts/*.py; do
             echo "Running $script"
