@@ -18,17 +18,29 @@ os.makedirs(SCRIPTS_DIR, exist_ok=True)
 # STEP 1: CLEAN DATABRICKS METADATA
 # =========================================================
 def clean_databricks_metadata(notebook_path):
+    """Fully sanitize Databricks notebook so nbconvert never fails."""
     with open(notebook_path, "r", encoding="utf-8") as f:
-        nb = json.load(f)
+        nb = nbformat.read(f, as_version=4)
 
-    for cell in nb.get("cells", []):
+    for cell in nb.cells:
+        # Remove invalid fields
         cell.pop("id", None)
-        if "metadata" in cell and "application/vnd.databricks.v1+cell" in cell["metadata"]:
-            del cell["metadata"]["application/vnd.databricks.v1+cell"]
+
+        # Only code cells are allowed to have outputs
+        if cell.cell_type != "code":
+            cell.pop("outputs", None)
+            cell.pop("execution_count", None)
+
+        # Remove Databricks metadata
+        if "metadata" in cell:
+            cell["metadata"].pop("application/vnd.databricks.v1+cell", None)
+
+    # Normalize notebook (fixes missing IDs warning)
+    nb, _ = normalize(nb)
 
     cleaned_path = notebook_path.replace(".ipynb", "_cleaned.ipynb")
     with open(cleaned_path, "w", encoding="utf-8") as f:
-        json.dump(nb, f)
+        nbformat.write(nb, f)
 
     return cleaned_path
 
