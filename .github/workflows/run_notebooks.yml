@@ -33,16 +33,6 @@ jobs:
         pip install nbformat nbconvert jupyter
 
     # --------------------------------------------------
-    # 4️⃣ Write Snowflake Private Key
-    # --------------------------------------------------
-    - name: Create Snowflake private key file
-      run: |
-        echo "${SNOWFLAKE_PRIVATE_KEY}" | base64 --decode > snowflake_key.p8
-        chmod 600 snowflake_key.p8
-      env:
-        SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-
-    # --------------------------------------------------
     # 5️⃣ Run convert.py (Notebook → .py)
     # --------------------------------------------------
     - name: Convert notebooks to python scripts
