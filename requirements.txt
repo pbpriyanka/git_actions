@@ -1,0 +1,11 @@
+# Core Python packages used
+nbformat==5.8.0
+nbconvert==7.6.1
+jupyter==2.4.1
+
+# Snowflake packages
+snowflake-snowpark-python==1.19.0
+cryptography==41.0.3
+
+# Optional dependencies for data handling in notebooks
+pandas==2.1.1
