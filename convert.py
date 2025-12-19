@@ -5,6 +5,8 @@ import subprocess
 import uuid
 import time
 import traceback
+import nbformat
+from nbformat import normalize
 
 # =========================================================
 # CONFIGURATION
