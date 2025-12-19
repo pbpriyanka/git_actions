@@ -1,46 +1,57 @@
+import json
 import os
 import re
 import subprocess
 import uuid
+import time
 import traceback
 import nbformat
 
-# ----------------------
+# =========================================================
 # CONFIGURATION
-# ----------------------
-NOTEBOOK_DIR = "./notebooks"
-SCRIPTS_DIR = "./scripts"
+# =========================================================
+NOTEBOOK_DIR = "./notebooks"  # folder containing notebooks
+SCRIPTS_DIR = "./scripts"     # folder to save converted .py scripts
 os.makedirs(SCRIPTS_DIR, exist_ok=True)
 
 
-# ----------------------
+# =========================================================
 # STEP 1: CLEAN DATABRICKS METADATA
-# ----------------------
+# =========================================================
 def clean_databricks_metadata(notebook_path):
-    """Sanitize Databricks notebook for nbconvert."""
+
+    """Fully sanitize Databricks notebook so nbconvert never fails."""
     with open(notebook_path, "r", encoding="utf-8") as f:
         nb = nbformat.read(f, as_version=4)
 
     for cell in nb.cells:
+        # Remove problematic IDs
         cell.pop("id", None)
+
+        # Markdown / raw cells must not have outputs
         if cell.cell_type != "code":
             cell.pop("outputs", None)
             cell.pop("execution_count", None)
+
+        # Code cells: outputs are allowed but can be safely removed
         if cell.cell_type == "code":
             cell["outputs"] = []
             cell["execution_count"] = None
+
+        # Remove Databricks-specific metadata
         if "metadata" in cell:
             cell["metadata"].pop("application/vnd.databricks.v1+cell", None)
 
     cleaned_path = notebook_path.replace(".ipynb", "_cleaned.ipynb")
     with open(cleaned_path, "w", encoding="utf-8") as f:
         nbformat.write(nb, f)
+
     return cleaned_path
 
 
-# ----------------------
-# STEP 2: EXTRACT IMPORTS
-# ----------------------
+# =========================================================
+# STEP 2: EXTRACT IMPORTS DYNAMICALLY
+# =========================================================
 def extract_imports(script_path):
     imports = set()
     pattern = re.compile(r"^\s*(import|from)\s+[a-zA-Z0-9_\.]+")
@@ -51,21 +62,28 @@ def extract_imports(script_path):
     return sorted(imports)
 
 
+# =========================================================
+# STEP 3: FILTER SNOWFLAKE-SAFE IMPORTS
+# =========================================================
 def filter_safe_imports(imports):
     blocked = ("pyspark", "spark", "databricks", "display", "streamlit")
     return [imp for imp in imports if not any(b in imp.lower() for b in blocked)]
 
 
-# ----------------------
-# STEP 3: CLEAN SCRIPT LOGIC
-# ----------------------
+# =========================================================
+# STEP 4: CLEAN SCRIPT LOGIC
+# =========================================================
 def clean_script(script_path):
     cleaned_lines = []
-    session_patterns = [re.compile(r"^\s*session\s*=\s*get_active_session\(\s*\)")]
+    session_patterns = [
+        re.compile(r"^\s*session\s*=\s*get_active_session\(\s*\)")
+    ]
     with open(script_path, "r", encoding="utf-8") as f:
         for line in f:
             s = line.strip()
-            if not s or s.startswith("#") or s.startswith("import") or s.startswith("from"):
+            if not s or s.startswith("#"):
+                continue
+            if s.startswith("import") or s.startswith("from"):
                 continue
             if "print(" in s or "display(" in s or "head(" in s:
                 continue
@@ -75,19 +93,22 @@ def clean_script(script_path):
     return cleaned_lines
 
 
-# ----------------------
-# STEP 4: BUILD HEADER & MAIN
-# ----------------------
+# =========================================================
+# STEP 5: BUILD HEADER AND MAIN WITH LOGGING & RETURN DF
+# =========================================================
 def build_dynamic_header(dynamic_imports):
     imports_block = "\n".join(dynamic_imports)
     snowflake_core = """
 import os
+import sys
 import uuid
 import time
 import traceback
 
 from snowflake.snowpark import Session, functions as F
-from snowflake.snowpark.functions import col, count, sum as sum_, countDistinct, coalesce, lit, when
+from snowflake.snowpark.functions import (
+    col, count, sum as sum_, countDistinct, coalesce, lit, when
+)
 """
 
     main_def = """
@@ -107,6 +128,7 @@ def log_operation(session, status, error_message='', run_id=None, script_name=No
 
 
 def main(session):
+
     script_name = os.path.basename(__file__)
     run_id = str(uuid.uuid4())
     log_operation(session, status="STARTED", run_id=run_id, script_name=script_name)
@@ -135,42 +157,25 @@ def main(session):
 
 
 if __name__ == "__main__":
-    # AUTO-SWITCH AUTH
-    conn_params = {}
-    if os.getenv("SNOWFLAKE_ACCOUNT") and os.getenv("SNOWFLAKE_USER") and os.getenv("SNOWFLAKE_PASSWORD"):
-        conn_params = {
-            "account": os.getenv("SNOWFLAKE_ACCOUNT"),
-            "user": os.getenv("SNOWFLAKE_USER"),
-            "password": os.getenv("SNOWFLAKE_PASSWORD"),
-            "role": os.getenv("SNOWFLAKE_ROLE"),
-            "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
-            "database": os.getenv("SNOWFLAKE_DATABASE"),
-            "schema": os.getenv("SNOWFLAKE_SCHEMA")
-        }
-    else:
-        # Fallback to keypair auth
-        conn_params = {
-            "account": os.getenv("SNOWFLAKE_ACCOUNT"),
-            "user": os.getenv("SNOWFLAKE_USER"),
-            "private_key_path": os.getenv("SNOWFLAKE_PRIVATE_KEY_PATH"),
-            "role": os.getenv("SNOWFLAKE_ROLE"),
-            "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
-            "database": os.getenv("SNOWFLAKE_DATABASE"),
-            "schema": os.getenv("SNOWFLAKE_SCHEMA")
-        }
-
-    session = Session.builder.configs(conn_params).create()
-    df = main(session)
-    df.show()
+    connection_parameters = {
+    "account": os.getenv("SNOWFLAKE_ACCOUNT"),
+    "user": os.getenv("SNOWFLAKE_USER"),
+    "role": os.getenv("SNOWFLAKE_ROLE"),
+    "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
+    "private_key_path": os.getenv("SNOWFLAKE_PRIVATE_KEY_PATH"),
+}
+    session = Session.builder.configs(connection_parameters).create()
+    result_df = main(session)
+    result_df.show()
     session.close()
 """
 
     return imports_block + "\n" + snowflake_core + main_def, main_footer
 
 
-# ----------------------
-# STEP 5: WRAP INTO SCRIPT
-# ----------------------
+# =========================================================
+# STEP 6: WRAP INTO FINAL SCRIPT
+# =========================================================
 def wrap_into_main(cleaned_code, dynamic_imports, output_path):
     header, footer = build_dynamic_header(dynamic_imports)
     indented_code = "\n".join("        " + line if line.strip() else "" for line in cleaned_code)
@@ -180,20 +185,28 @@ def wrap_into_main(cleaned_code, dynamic_imports, output_path):
     return output_path
 
 
-# ----------------------
-# STEP 6: CONVERT ONE NOTEBOOK
-# ----------------------
+# =========================================================
+# STEP 7: CONVERT ONE NOTEBOOK
+# =========================================================
 def convert_notebook(notebook_path):
     cleaned_ipynb = clean_databricks_metadata(notebook_path)
+
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
     output_py = os.path.join(SCRIPTS_DIR, notebook_name + ".py")
 
+    # Convert notebook → script directly into scripts directory
     subprocess.run(
-        ["jupyter", "nbconvert", "--to", "script", cleaned_ipynb, "--output", notebook_name, "--output-dir", SCRIPTS_DIR],
+        [
+            "jupyter", "nbconvert",
+            "--to", "script",
+            cleaned_ipynb,
+            "--output", notebook_name,
+            "--output-dir", SCRIPTS_DIR
+        ],
         check=True
     )
 
-    # Rename .txt → .py if needed
+    # nbconvert sometimes creates .txt instead of .py
     if os.path.exists(output_py.replace(".py", ".txt")):
         os.rename(output_py.replace(".py", ".txt"), output_py)
 
@@ -202,14 +215,16 @@ def convert_notebook(notebook_path):
     cleaned_code = clean_script(output_py)
 
     final_file = wrap_into_main(cleaned_code, safe_imports, output_py)
+
     os.remove(cleaned_ipynb)
+
     print(f"Converted: {notebook_path} → {final_file}")
     return final_file
 
 
-# ----------------------
-# STEP 7: CONVERT ALL NOTEBOOKS
-# ----------------------
+# =========================================================
+# STEP 8: CONVERT ALL NOTEBOOKS
+# =========================================================
 def convert_all_notebooks():
     for f in os.listdir(NOTEBOOK_DIR):
         if f.endswith(".ipynb"):
