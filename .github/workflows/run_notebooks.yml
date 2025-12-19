@@ -2,8 +2,7 @@ name: Convert Notebooks and Run on Snowflake
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -16,36 +15,28 @@ jobs:
       SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
       SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
       SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install snowflake-snowpark-python pandas numpy jupyter nbconvert
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install snowflake-snowpark-python pandas numpy nbformat jupyter nbconvert
 
-    - name: Ensure scripts folder exists
-      run: |
-        mkdir -p scripts
+      - name: Convert notebooks to Snowflake scripts
+        run: |
+          python convert.py
 
-    - name: Convert notebooks to scripts
-      run: |
-        python convert.py
-        # Move all converted .py scripts to scripts/ folder
-        mv final_output.py scripts/
-
-    - name: Run converted scripts on Snowflake
-      run: |
-        for script in scripts/*.py; do
-          echo "Running $script..."
-          python "$script"
-        done
+      - name: Run converted scripts on Snowflake
+        run: |
+          for script in scripts/*.py; do
+            echo "Running $script"
+            python "$script"
+          done
