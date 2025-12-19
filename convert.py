@@ -188,27 +188,33 @@ def wrap_into_main(cleaned_code, dynamic_imports, output_path):
 # =========================================================
 def convert_notebook(notebook_path):
     cleaned_ipynb = clean_databricks_metadata(notebook_path)
-    output_dir = os.path.dirname(notebook_path)
-    subprocess.run(["jupyter", "nbconvert", "--to", "script", cleaned_ipynb, "--output-dir", output_dir], check=True)
 
-    candidates = [f for f in os.listdir(output_dir) if f.endswith(".py") or f.endswith(".txt")]
-    script_file = max(candidates, key=lambda f: os.path.getmtime(os.path.join(output_dir, f)))
-    script_path = os.path.join(output_dir, script_file)
-    if script_path.endswith(".txt"):
-        new_path = script_path.replace(".txt", ".py")
-        os.rename(script_path, new_path)
-        script_path = new_path
+    notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
+    output_py = os.path.join(SCRIPTS_DIR, notebook_name + ".py")
 
-    raw_imports = extract_imports(script_path)
+    # Convert notebook → script directly into scripts directory
+    subprocess.run(
+        [
+            "jupyter", "nbconvert",
+            "--to", "script",
+            cleaned_ipynb,
+            "--output", notebook_name,
+            "--output-dir", SCRIPTS_DIR
+        ],
+        check=True
+    )
+
+    # nbconvert sometimes creates .txt instead of .py
+    if os.path.exists(output_py.replace(".py", ".txt")):
+        os.rename(output_py.replace(".py", ".txt"), output_py)
+
+    raw_imports = extract_imports(output_py)
     safe_imports = filter_safe_imports(raw_imports)
-    cleaned_code = clean_script(script_path)
+    cleaned_code = clean_script(output_py)
 
-    notebook_name = os.path.splitext(os.path.basename(notebook_path))[0] + ".py"
-    output_path = os.path.join(SCRIPTS_DIR, notebook_name)
-    final_file = wrap_into_main(cleaned_code, safe_imports, output_path)
+    final_file = wrap_into_main(cleaned_code, safe_imports, output_py)
 
     os.remove(cleaned_ipynb)
-    os.remove(script_path)
 
     print(f"Converted: {notebook_path} → {final_file}")
     return final_file
