@@ -143,7 +143,7 @@ def main(session):
         log_df.write.save_as_table("ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS", mode="append")
         return run_id
 
-    def log_script(session: snowpark.Session,script_name=script_name):
+    def log_script(session,script_name=script_name):
 
         run_id = str(uuid.uuid4())
         try:
