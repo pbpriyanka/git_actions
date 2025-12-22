@@ -106,7 +106,7 @@ def clean_script(script_path):
 # =========================================================
 # STEP 5: BUILD HEADER AND MAIN WITH LOGGING & RETURN DF
 # =========================================================
-def build_dynamic_header(dynamic_imports, notebook_name):
+def build_dynamic_header(dynamic_imports):
     imports_block = "\n".join(dynamic_imports)
 
     snowflake_core = """
@@ -124,7 +124,7 @@ def main(session):
 
     script_name = "{notebook_name}"  # Use the original notebook name
 
-    def log_operation(session, status, error_message='', run_id=None, script_name=script_name):
+    def log_operation(session, status, error_message='', run_id=None, script_name=None):
         if run_id is None:
             run_id = str(uuid.uuid4())
         created_at = session.sql("SELECT CURRENT_TIMESTAMP() AS created_at").collect()[0]["CREATED_AT"]
