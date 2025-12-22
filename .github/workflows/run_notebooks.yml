@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -38,8 +38,8 @@ jobs:
       - name: Validate converted scripts
         run: |
           echo "📂 Converted scripts:"
-          ls -l scripts/
-          test "$(ls -A scripts/*.py)" || (echo "❌ No scripts generated" && exit 1)
+          ls -l script/
+          test "$(ls -A script/*.py)" || (echo "❌ No scripts generated" && exit 1)
 
       # ---------------------------------------------------
       # STEP 3: Upload ALL scripts to Snowflake stage
@@ -68,7 +68,7 @@ jobs:
         run: |
           set -e
           echo "🚀 Executing converted scripts"
-          for script in scripts/*.py; do
+          for script in script/*.py; do
             echo "▶️ Running $script"
             python "$script"
           done
