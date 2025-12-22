@@ -4,7 +4,13 @@ nbconvert
 jupyter
 pandas
 
-# Snowflake packages
-snowflake-snowpark-python
-cryptography
+# Core
+pandas==2.1.4
+numpy<2.0
 
+# REQUIRED for Snowflake pandas fetch
+pyarrow>=14.0.1
+
+# Snowflake
+snowflake-connector-python[pandas]==4.1.1
+snowflake-snowpark-python==1.44.0
