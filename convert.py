@@ -235,7 +235,8 @@ def main(session):
 
     main_footer = """
         log_operation(session, status="SUCCESS", run_id=run_id, script_name=script_name)
-
+        session.sql("USE DATABASE ORANGE_ZONE_SBX_TA").collect()
+        session.sql("USE SCHEMA PUBLIC").collect()
         session.sproc.register(
             func=log_script,
             name=script_name,
