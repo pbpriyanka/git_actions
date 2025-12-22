@@ -23,27 +23,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run notebook conversion
+      # ---------------------------------------------------
+      # STEP 1: Convert ALL notebooks → scripts/*.py
+      # ---------------------------------------------------
+      - name: Convert all notebooks
         run: |
           set -e
-          echo "🚀 Running convert_ipynb_to_py.py"
+          echo "🚀 Converting notebooks to scripts"
           python convert.py
 
-      - name: Validate converted script exists
+      # ---------------------------------------------------
+      # STEP 2: Validate conversion output
+      # ---------------------------------------------------
+      - name: Validate converted scripts
         run: |
-          test -f scripts/data_harmonization.py
+          echo "📂 Converted scripts:"
+          ls -l scripts/
+          test "$(ls -A scripts/*.py)" || (echo "❌ No scripts generated" && exit 1)
 
-      - name: Upload converted scripts to Snowflake stage
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-        run: python upload_to_stage.py
-
-      
-      - name: Run converted Snowflake script
+      # ---------------------------------------------------
+      # STEP 3: Upload ALL scripts to Snowflake stage
+      # ---------------------------------------------------
+      - name: Upload scripts to Snowflake stage
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
@@ -51,5 +52,23 @@ jobs:
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
         run: |
-          echo "🚀 Running data_harmonization.py"
-          python scripts/data_harmonization.py
+          echo "🚀 Uploading scripts to Snowflake stage"
+          python upload_to_stage.py
+
+      # ---------------------------------------------------
+      # STEP 4: Run ALL converted scripts sequentially
+      # ---------------------------------------------------
+      - name: Run all converted Snowflake scripts
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: |
+          set -e
+          echo "🚀 Executing converted scripts"
+          for script in scripts/*.py; do
+            echo "▶️ Running $script"
+            python "$script"
+          done
