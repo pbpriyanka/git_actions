@@ -122,9 +122,9 @@ def main(session):
     import os
     import sys
 
-    script_name = "{notebook_name}"  # Use the original notebook name
+    script_name = "{notebook_name}"  # Use the notebook name as script name
 
-    def log_operation(session, status, error_message='', run_id=None, script_name=script_name):
+    def log_operation(session, status, error_message='', run_id=None, script_name=None):
         if run_id is None:
             run_id = str(uuid.uuid4())
         created_at = session.sql("SELECT CURRENT_TIMESTAMP() AS created_at").collect()[0]["CREATED_AT"]
@@ -299,14 +299,14 @@ if __name__ == "__main__":
 # =========================================================
 # STEP 6: WRAP INTO FINAL SCRIPT
 # =========================================================
-def wrap_into_main(cleaned_code, dynamic_imports, output_path):
-    notebook_name = os.path.basename(notebook_path) 
+def wrap_into_main(cleaned_code, dynamic_imports, notebook_name, output_path):
     header, footer = build_dynamic_header(dynamic_imports, notebook_name)
     indented_code = "\n".join("        " + line if line.strip() else "" for line in cleaned_code)
     final_script = header + "\n" + indented_code + footer
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(final_script)
     return output_path
+
 
 
 # =========================================================
@@ -318,7 +318,6 @@ def convert_notebook(notebook_path):
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
     output_py = os.path.join(SCRIPTS_DIR, notebook_name + ".py")
 
-    # Convert notebook → script directly into scripts directory
     subprocess.run(
         [
             "jupyter", "nbconvert",
@@ -330,7 +329,6 @@ def convert_notebook(notebook_path):
         check=True
     )
 
-    # nbconvert sometimes creates .txt instead of .py
     if os.path.exists(output_py.replace(".py", ".txt")):
         os.rename(output_py.replace(".py", ".txt"), output_py)
 
@@ -338,13 +336,13 @@ def convert_notebook(notebook_path):
     safe_imports = filter_safe_imports(raw_imports)
     cleaned_code = clean_script(output_py)
 
-    final_file = wrap_into_main(cleaned_code, safe_imports, output_py)
+    # Pass notebook_name here
+    final_file = wrap_into_main(cleaned_code, safe_imports, notebook_name, output_py)
 
     os.remove(cleaned_ipynb)
 
     print(f"Converted: {notebook_path} → {final_file}")
     return final_file
-
 
 # =========================================================
 # STEP 8: CONVERT ALL NOTEBOOKS
