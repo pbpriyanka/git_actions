@@ -115,13 +115,12 @@ from snowflake.snowpark import functions as F
 import uuid
 import time
 import traceback
+import os
+import sys
 """
 
     main_def = f"""
 def main(session):
-    import os
-    import sys
-
     script_name = "{notebook_name}"  # Use the notebook name as script name
 
     def log_operation(session, status, error_message='', run_id=None, script_name=None):
