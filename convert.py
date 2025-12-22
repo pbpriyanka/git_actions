@@ -112,6 +112,12 @@ def build_dynamic_header(dynamic_imports, notebook_name):
     snowflake_core = """
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark import functions as F
+from snowflake.snowpark import Session, functions as F
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
+from snowflake.snowpark.functions import (
+    col, count, sum as sum_, countDistinct, coalesce, lit, when
+)
 import uuid
 import time
 import traceback
