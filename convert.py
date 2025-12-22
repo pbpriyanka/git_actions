@@ -106,68 +106,163 @@ def clean_script(script_path):
 # =========================================================
 # STEP 5: BUILD HEADER AND MAIN WITH LOGGING & RETURN DF
 # =========================================================
-def build_dynamic_header(dynamic_imports):
+def build_dynamic_header(dynamic_imports, notebook_name):
     imports_block = "\n".join(dynamic_imports)
+
     snowflake_core = """
-import os
-import sys
+from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark import functions as F
 import uuid
 import time
 import traceback
-
-from snowflake.snowpark import Session, functions as F
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
-from snowflake.snowpark.functions import (
-    col, count, sum as sum_, countDistinct, coalesce, lit, when
-)
 """
 
-    main_def = """
-def log_operation(session, status, error_message='', run_id=None, script_name=None):
-    if run_id is None:
+    main_def = f"""
+def main(session):
+    import os
+    import sys
+
+    script_name = "{notebook_name}"  # Use the original notebook name
+
+    def log_operation(session, status, error_message='', run_id=None, script_name=script_name):
+        if run_id is None:
+            run_id = str(uuid.uuid4())
+        created_at = session.sql("SELECT CURRENT_TIMESTAMP() AS created_at").collect()[0]["CREATED_AT"]
+        log_df = session.create_dataframe([{{
+            "run_id": run_id,
+            "script_name": script_name,
+            "status": status,
+            "error_message": error_message,
+            "created_at": created_at
+        }}])
+        log_df.write.save_as_table("ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS", mode="append")
+        return run_id
+
+    def log_script(session: snowpark.Session,script_name=script_name):
+
         run_id = str(uuid.uuid4())
-    created_at = session.sql("SELECT CURRENT_TIMESTAMP() AS created_at").collect()[0]["CREATED_AT"]
-    log_df = session.create_dataframe([{
+        try:
+            # Log START
+            log_operation(
+                session,
+                status="STARTED",
+                run_id=run_id,
+                script_name=script_name
+            )
+
+            # Log SUCCESS
+            log_operation(
+                session,
+                status="SUCCESS",
+                run_id=run_id,
+                script_name=script_name
+            )
+
+            # ALWAYS return a DataFrame
+            return session.table(
+    "ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS"
+).filter(
+    F.col("RUN_ID") == run_id
+).select(
+    F.col("RUN_ID").alias("run_id"),
+    F.col("MODEL_NAME").alias("script_name"),   # alias to match return_schema
+    F.col("STATUS").alias("status"),
+    F.col("ERROR_MESSAGE").alias("error_message"),
+    F.col("CREATED_AT").alias("created_at")
+)
+
+
+        except Exception as e:
+            error_message = f"{{str(e)}}\\n{{traceback.format_exc()}}"
+
+            # Log FAILURE
+            log_operation(
+                session,
+                status="FAILED",
+                error_message=error_message,
+                run_id=run_id,
+                script_name=script_name
+            )
+
+            return session.create_dataframe(
+    [{{
         "run_id": run_id,
         "script_name": script_name,
-        "status": status,
+        "status": "FAILED",
         "error_message": error_message,
-        "created_at": created_at
-    }])
-    log_df.write.save_as_table("ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS", mode="append")
-    return run_id
+        "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
+    }}],
+    schema=return_schema
+)      
+    packages = []
+    stage_file_path = '@"ORANGE_ZONE_SBX_TA"."PUBLIC"."CONNECTIONS"/requirements.txt'
+    target_dir = "/tmp"
+    session.file.get(stage_file_path, target_dir)
 
+    file_name = stage_file_path.split("/")[-1]
+    local_path = os.path.join(target_dir, file_name)
 
-def main(session):
+    with open(local_path, "r") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#"):
+                packages.append(line)
 
-    script_name = os.path.basename(__file__)
+    if "snowflake-snowpark-python" not in packages:
+        packages.append("snowflake-snowpark-python")
+
+    # --------------------------
+    # Stored Procedure return schema
+    # --------------------------
+    return_schema = StructType([
+        StructField("run_id", StringType()),
+        StructField("script_name", StringType()),
+        StructField("status", StringType()),
+        StructField("error_message", StringType()),
+        StructField("created_at", StringType())
+    ])
+
+    start_time = time.time()
     run_id = str(uuid.uuid4())
     log_operation(session, status="STARTED", run_id=run_id, script_name=script_name)
+
     try:
 """
 
-    main_footer = """
+    main_footer = f"""
         log_operation(session, status="SUCCESS", run_id=run_id, script_name=script_name)
-        return session.create_dataframe([{
+
+        session.sproc.register(
+            func=log_script,
+            name=script_name,
+            packages=packages,
+            replace=True,
+            is_permanent=True,
+            stage_location='@"CONNECTIONS"',
+            database="ORANGE_ZONE_SBX_TA",
+            schema="PUBLIC",
+            return_type=return_schema
+        )
+
+        return session.create_dataframe([{{
             "run_id": run_id,
             "script_name": script_name,
             "status": "SUCCESS",
             "error_message": None,
             "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
-        }])
+        }}])
+
     except Exception as e:
-        error_msg = f"{str(e)}\\n{traceback.format_exc()}"
+        error_msg = f"{{str(e)}}\\n{{traceback.format_exc()}}"
         log_operation(session, status="FAILED", error_message=error_msg, run_id=run_id, script_name=script_name)
-        return session.create_dataframe([{
+        return session.create_dataframe([{{
             "run_id": run_id,
             "script_name": script_name,
             "status": "FAILED",
             "error_message": error_msg,
             "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
-        }])
-
-
+        }}])
+"""
 if __name__ == "__main__":
     private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
 
@@ -199,9 +294,7 @@ if __name__ == "__main__":
     result_df.show()
     session.close()
 """
-
     return imports_block + "\n" + snowflake_core + main_def, main_footer
-
 
 # =========================================================
 # STEP 6: WRAP INTO FINAL SCRIPT
