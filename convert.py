@@ -170,8 +170,6 @@ def main(session):
     F.col("ERROR_MESSAGE").alias("error_message"),
     F.col("CREATED_AT").alias("created_at")
 )
-
-
         except Exception as e:
             error_message = f"{{str(e)}}\\n{{traceback.format_exc()}}"
 
@@ -229,7 +227,7 @@ def main(session):
     try:
 """
 
-    main_footer = f"""
+    main_footer = """
         log_operation(session, status="SUCCESS", run_id=run_id, script_name=script_name)
 
         session.sproc.register(
@@ -244,24 +242,24 @@ def main(session):
             return_type=return_schema
         )
 
-        return session.create_dataframe([{{
+        return session.create_dataframe([{
             "run_id": run_id,
             "script_name": script_name,
             "status": "SUCCESS",
             "error_message": None,
             "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
-        }}])
+        }])
 
     except Exception as e:
-        error_msg = f"{{str(e)}}\\n{{traceback.format_exc()}}"
+        error_msg = f"{str(e)}\\n{traceback.format_exc()}"
         log_operation(session, status="FAILED", error_message=error_msg, run_id=run_id, script_name=script_name)
-        return session.create_dataframe([{{
+        return session.create_dataframe([{
             "run_id": run_id,
             "script_name": script_name,
             "status": "FAILED",
             "error_message": error_msg,
             "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
-        }}])
+        }])
 
 if __name__ == "__main__":
     private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
@@ -289,16 +287,16 @@ if __name__ == "__main__":
     session = Session.builder.configs(connection_parameters).create()
     print("Snowflake session created successfully")
 
-
     result_df = main(session)
     result_df.show()
     session.close()
 """
     return imports_block + "\n" + snowflake_core + main_def, main_footer
-
+    
 # =========================================================
 # STEP 6: WRAP INTO FINAL SCRIPT
 # =========================================================
+
 def wrap_into_main(cleaned_code, dynamic_imports, notebook_name, output_path):
     header, footer = build_dynamic_header(dynamic_imports, notebook_name)
     indented_code = "\n".join("        " + line if line.strip() else "" for line in cleaned_code)
