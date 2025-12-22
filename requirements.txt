@@ -2,10 +2,9 @@
 nbformat
 nbconvert
 jupyter
+pandas
 
 # Snowflake packages
 snowflake-snowpark-python
 cryptography
 
-# Optional dependencies for data handling in notebooks
-pandas
