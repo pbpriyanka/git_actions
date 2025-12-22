@@ -95,7 +95,7 @@ def clean_script(script_path):
                 continue
             if s.startswith("import") or s.startswith("from"):
                 continue
-            if "print(" in s or "display(" in s or "head(" in s:
+            if "display(" in s or "head(" in s:
                 continue
             if any(p.match(s) for p in session_patterns):
                 continue
