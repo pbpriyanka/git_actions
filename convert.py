@@ -262,7 +262,7 @@ def main(session):
             "error_message": error_msg,
             "created_at": session.sql("SELECT CURRENT_TIMESTAMP() AS ts").collect()[0]["TS"]
         }}])
-"""
+
 if __name__ == "__main__":
     private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
 
