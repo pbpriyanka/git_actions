@@ -326,7 +326,7 @@ def convert_notebook(notebook_path):
     subprocess.run(
         [
             "jupyter", "nbconvert",
-            "--to", "scripts",
+            "--to", "script",
             cleaned_ipynb,
             "--output", notebook_name,
             "--output-dir", SCRIPTS_DIR
