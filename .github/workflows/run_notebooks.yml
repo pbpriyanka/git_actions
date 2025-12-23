@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "Converted scripts:"
           ls -l script/
-          test "$(ls -A script/*.py)" || (echo "No scripts generated" && exit 1)
+          test "$(ls -A scripts/*.py)" || (echo "No scripts generated" && exit 1)
 
       # ---------------------------------------------------
       # STEP 3: Upload ALL scripts to Snowflake stage
