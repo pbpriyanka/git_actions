@@ -1,4 +1,4 @@
-# Core Python packages used
+# Notebook handling
 nbformat
 nbconvert
 jupyter
@@ -6,13 +6,8 @@ jupyter
 # Core
 pandas==2.1.4
 numpy<2.0
-
-# REQUIRED for Snowflake pandas fetch
 pyarrow>=14.0.1
 
-# Snowflake
-# snowflake-connector-python[pandas]==4.1.1
+# Snowflake (aligned)
 snowflake-snowpark-python==1.44.0
-snowflake-connector-python==4.0.0
-snowflake-ml-python==1.19.0
-
+snowflake-connector-python==4.1.1
