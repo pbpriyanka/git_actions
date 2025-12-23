@@ -2,7 +2,6 @@
 nbformat
 nbconvert
 jupyter
-pandas
 
 # Core
 pandas==2.1.4
@@ -12,5 +11,8 @@ numpy<2.0
 pyarrow>=14.0.1
 
 # Snowflake
-snowflake-connector-python[pandas]==4.1.1
+# snowflake-connector-python[pandas]==4.1.1
 snowflake-snowpark-python==1.44.0
+snowflake-connector-python==4.0.0
+snowflake-ml-python==1.19.0
+
