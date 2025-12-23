@@ -30,7 +30,7 @@ def get_snowflake_session():
     return Session.builder.configs(connection_parameters).create()
 
 
-def upload_scripts_to_stage(scripts_folder="scripts", stage='"ORANGE_ZONE_SBX_TA"."PUBLIC"."CONNECTIONS"'):
+def upload_scripts_to_stage(scripts_folder="scripts", stage='@"ORANGE_ZONE_SBX_TA"."PUBLIC"."CONNECTIONS"'):
     session = get_snowflake_session()
     print("Snowflake session created successfully")
 
@@ -38,7 +38,13 @@ def upload_scripts_to_stage(scripts_folder="scripts", stage='"ORANGE_ZONE_SBX_TA
         if file.endswith(".py"):
             local_path = os.path.join(scripts_folder, file)
             print(f"Uploading {local_path} → {stage}")
-            session.file.put(f"file://{local_path}", stage, auto_compress=False, overwrite=True)
+            # session.file.put(f"file://{local_path}", stage, auto_compress=False, overwrite=True)
+            session.file.put(
+    f"file://{os.path.abspath(local_path)}",
+    f'{stage}/{file}',
+    auto_compress=False,
+    overwrite=True
+)
 
     print("All scripts uploaded to Snowflake stage successfully")
     session.close()
