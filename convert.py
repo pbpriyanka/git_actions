@@ -11,7 +11,7 @@ import nbformat
 # CONFIGURATION
 # =========================================================
 NOTEBOOK_DIR = "./notebooks"  # folder containing notebooks
-SCRIPTS_DIR = "./script"     # folder to save converted .py scripts
+SCRIPTS_DIR = "./scripts"     # folder to save converted .py scripts
 os.makedirs(SCRIPTS_DIR, exist_ok=True)
 
 
