@@ -69,6 +69,6 @@ jobs:
           set -e
           echo "Executing converted scripts"
           for script in scripts/*.py; do
-            echo "Running $scripts"
-            python "$scripts"
+            echo "Running $script"
+            python "$script"
           done
