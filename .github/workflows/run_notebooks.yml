@@ -29,7 +29,7 @@ jobs:
       - name: Convert all notebooks
         run: |
           set -e
-          echo "🚀 Converting notebooks to scripts"
+          echo "Converting notebooks to scripts"
           python convert.py
 
       # ---------------------------------------------------
@@ -37,9 +37,9 @@ jobs:
       # ---------------------------------------------------
       - name: Validate converted scripts
         run: |
-          echo "📂 Converted scripts:"
+          echo "Converted scripts:"
           ls -l script/
-          test "$(ls -A script/*.py)" || (echo "❌ No scripts generated" && exit 1)
+          test "$(ls -A script/*.py)" || (echo "No scripts generated" && exit 1)
 
       # ---------------------------------------------------
       # STEP 3: Upload ALL scripts to Snowflake stage
@@ -52,7 +52,7 @@ jobs:
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
         run: |
-          echo "🚀 Uploading scripts to Snowflake stage"
+          echo "Uploading scripts to Snowflake stage"
           python upload_to_stage.py
 
       # ---------------------------------------------------
@@ -67,8 +67,8 @@ jobs:
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
         run: |
           set -e
-          echo "🚀 Executing converted scripts"
+          echo "Executing converted scripts"
           for script in script/*.py; do
-            echo "▶️ Running $script"
+            echo "Running $script"
             python "$script"
           done
