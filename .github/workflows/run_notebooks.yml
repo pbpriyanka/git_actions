@@ -38,7 +38,7 @@ jobs:
       - name: Validate converted scripts
         run: |
           echo "Converted scripts:"
-          ls -l script/
+          ls -l scripts/
           test "$(ls -A scripts/*.py)" || (echo "No scripts generated" && exit 1)
 
       # ---------------------------------------------------
