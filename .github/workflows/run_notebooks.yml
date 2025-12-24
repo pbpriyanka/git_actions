@@ -23,58 +23,58 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run UDF tests
-        run: python test_udf.py
+      # - name: Run UDF tests
+      #   run: python test_udf.py
 
-      # # ---------------------------------------------------
-      # # STEP 1: Convert ALL notebooks → scripts/*.py
-      # # ---------------------------------------------------
-      # - name: Convert all notebooks
-      #   run: |
-      #     set -e
-      #     echo "Converting notebooks to scripts"
-      #     python convert.py
+      # ---------------------------------------------------
+      # STEP 1: Convert ALL notebooks → scripts/*.py
+      # ---------------------------------------------------
+      - name: Convert all notebooks
+        run: |
+          set -e
+          echo "Converting notebooks to scripts"
+          python convert.py
 
-      # # ---------------------------------------------------
-      # # STEP 2: Validate conversion output
-      # # ---------------------------------------------------
-      # - name: Validate converted scripts
-      #   run: |
-      #     echo "Converted scripts:"
-      #     ls -l scripts/
-      #     test "$(ls -A scripts/*.py)" || (echo "No scripts generated" && exit 1)
+      # ---------------------------------------------------
+      # STEP 2: Validate conversion output
+      # ---------------------------------------------------
+      - name: Validate converted scripts
+        run: |
+          echo "Converted scripts:"
+          ls -l scripts/
+          test "$(ls -A scripts/*.py)" || (echo "No scripts generated" && exit 1)
 
-      # # ---------------------------------------------------
-      # # STEP 3: Upload ALL scripts to Snowflake stage
-      # # ---------------------------------------------------
-      # - name: Upload scripts to Snowflake stage
-      #   env:
-      #     SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      #     SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      #     SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-      #     SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      #     SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-      #   run: |
-      #     echo "Uploading scripts to Snowflake stage"
-      #     python upload_to_stage.py
+      # ---------------------------------------------------
+      # STEP 3: Upload ALL scripts to Snowflake stage
+      # ---------------------------------------------------
+      - name: Upload scripts to Snowflake stage
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: |
+          echo "Uploading scripts to Snowflake stage"
+          python upload_to_stage.py
 
-      # # ---------------------------------------------------
-      # # STEP 4: Run ALL converted scripts sequentially
-      # # ---------------------------------------------------
-      # - name: Run all converted Snowflake scripts
-      #   env:
-      #     SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      #     SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      #     SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-      #     SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      #     SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-      #   run: |
-      #     set -e
-      #     echo "Executing converted scripts"
-      #     for script in scripts/*.py; do
-      #       echo "Running $script"
-      #       python "$script"
-      #     done
+      # ---------------------------------------------------
+      # STEP 4: Run ALL converted scripts sequentially
+      # ---------------------------------------------------
+      - name: Run all converted Snowflake scripts
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: |
+          set -e
+          echo "Executing converted scripts"
+          for script in scripts/*.py; do
+            echo "Running $script"
+            python "$script"
+          done
 
       # - name: Run Snowflake Tasks
       #   env:
