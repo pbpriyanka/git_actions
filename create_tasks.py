@@ -23,8 +23,8 @@ conn = connect(
     user=os.environ['SNOWFLAKE_USER'],
     account=os.environ['SNOWFLAKE_ACCOUNT'],
     warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
-    database='ORANGE_ZONE_SBX_TA',  # keep your hardcoded DB
-    schema='PUBLIC',                 # keep your hardcoded schema
+    database='ORANGE_ZONE_SBX_TA',
+    schema='PUBLIC',
     private_key=private_key_der
 )
 
@@ -41,9 +41,11 @@ sp_tasks = [
 
 for i, (task_name, sp_name) in enumerate(sp_tasks):
     if i == 0:
+        # First task needs a schedule
         sql = f"""
         CREATE OR REPLACE TASK {task_name}
           WAREHOUSE = {os.environ['SNOWFLAKE_WAREHOUSE']}
+          SCHEDULE = 'USING CRON * * * * * UTC'  -- every minute
         AS
           CALL {sp_name}();
         """
