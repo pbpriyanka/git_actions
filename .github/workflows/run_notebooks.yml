@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run UDF tests
-        run: python scripts/test_udf.py
+        run: python test_udf.py
 
       # # ---------------------------------------------------
       # # STEP 1: Convert ALL notebooks → scripts/*.py
