@@ -214,6 +214,7 @@ def main(session):
 
     if "snowflake-snowpark-python" not in packages:
         packages.append("snowflake-snowpark-python")
+        packages.append("pandas")
 
     # --------------------------
     # Stored Procedure return schema
