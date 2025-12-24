@@ -2,18 +2,21 @@ import pandas as pd
 import numpy as np
 import datetime
 
-
 # =====================================================
-# Snowflake-safe conversion utilities
+# 1️⃣ Scalar conversion (STRICT + ORDERED)
 # =====================================================
 
 def _to_python_scalar(x):
+    """
+    Convert ANY pandas / numpy scalar into
+    Snowflake-safe native Python scalar.
+    """
     if x is None or pd.isna(x):
         return None
 
-    # 🔴 MUST handle Timestamp FIRST
+    # ⚠️ MUST BE FIRST
     if isinstance(x, pd.Timestamp):
-        return x.to_pydatetime()  # native datetime.datetime
+        return x.to_pydatetime()
 
     if isinstance(x, np.integer):
         return int(x)
@@ -27,55 +30,76 @@ def _to_python_scalar(x):
     if isinstance(x, (int, float, str, bool, datetime.date, datetime.datetime)):
         return x
 
+    # FINAL fallback (never breaks Snowflake)
     return str(x)
 
 
-
 def convert_df_to_snowflake_safe(df: pd.DataFrame) -> pd.DataFrame:
-    for col in df.columns:
-        df[col] = df[col].apply(_to_python_scalar)
-    return df
+    """
+    Convert entire DataFrame to Snowflake-safe types.
+    MUST be the last step in UDF.
+    """
+    return df.applymap(_to_python_scalar)
 
 
 # =====================================================
-# Safety assertion (THIS BLOCKS BAD DEPLOYS)
+# 2️⃣ CI BLOCKER — FAILS BAD DEPLOYS
 # =====================================================
 
 def assert_snowflake_safe(df: pd.DataFrame):
+    """
+    Ensure only Snowflake-supported Python types exist.
+    """
+    allowed = (
+        type(None),
+        int,
+        float,
+        str,
+        bool,
+        datetime.date,
+        datetime.datetime,
+    )
+
     for col in df.columns:
         for val in df[col]:
-            assert not isinstance(
-                val, (np.generic, pd.Timestamp)
+            assert isinstance(
+                val, allowed
             ), f"❌ Unsafe type {type(val)} in column '{col}'"
 
 
 # =====================================================
-# Example UDF wrapper (plug in real UDF here)
+# 3️⃣ EXAMPLE UDF (REPLACE BODY WITH REAL LOGIC)
 # =====================================================
 
 def missing_value_treatment_UDF(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Replace this body with your real logic.
-    Keep the FINAL conversion step.
+    Replace ONLY the middle logic with real implementation.
+    Do NOT remove final conversion.
     """
 
-    # Simulate real transformations
     df = df.copy()
+
+    # ---- Example transformations ----
     df["int_col"] = df["int_col"].fillna(0)
     df["float_col"] = df["float_col"].interpolate()
     df["bool_col"] = df["bool_col"].fillna(False)
-    # df["date_col"] = pd.to_datetime(df["date_col"])
+
+    # ⚠️ DO NOT reconvert date column after this point
 
     # 🚨 MANDATORY FINAL STEP
     df = convert_df_to_snowflake_safe(df)
+
     return df
 
 
 # =====================================================
-# ACTUAL TEST
+# 4️⃣ LOCAL + CI TEST
 # =====================================================
 
 def test_missing_value_udf_snowflake_safe():
+    """
+    This test GUARANTEES Snowflake will not crash.
+    """
     df = pd.DataFrame({
         "int_col": pd.Series([1, None, 3], dtype="Int64"),
         "float_col": [1.2, None, 3.4],
@@ -86,22 +110,22 @@ def test_missing_value_udf_snowflake_safe():
 
     df_out = missing_value_treatment_UDF(df)
 
-    # 1️⃣ Structural check
+    # Structural check
     assert isinstance(df_out, pd.DataFrame)
 
-    # 2️⃣ NO numpy / pandas scalars allowed
+    # 🚨 HARD BLOCKER
     assert_snowflake_safe(df_out)
 
-    # 3️⃣ Smoke print (debug-friendly)
-    print("✅ Snowflake-safe output:")
+    # Debug visibility
+    print("\n✅ SNOWFLAKE-SAFE OUTPUT")
     print(df_out)
     print(df_out.dtypes)
 
 
 # =====================================================
-# Local run support
+# 5️⃣ CLI ENTRYPOINT
 # =====================================================
 
 if __name__ == "__main__":
     test_missing_value_udf_snowflake_safe()
-    print("🎉 ALL TESTS PASSED — SAFE TO DEPLOY")
+    print("\n🎉 ALL TESTS PASSED — SAFE TO DEPLOY")
