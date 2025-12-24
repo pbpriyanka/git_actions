@@ -11,22 +11,24 @@ def _to_python_scalar(x):
     if x is None or pd.isna(x):
         return None
 
-    if isinstance(x, (np.integer,)):
+    # 🔴 MUST handle Timestamp FIRST
+    if isinstance(x, pd.Timestamp):
+        return x.to_pydatetime()  # native datetime.datetime
+
+    if isinstance(x, np.integer):
         return int(x)
 
-    if isinstance(x, (np.floating,)):
+    if isinstance(x, np.floating):
         return float(x)
 
-    if isinstance(x, (np.bool_,)):
+    if isinstance(x, np.bool_):
         return bool(x)
-
-    if isinstance(x, pd.Timestamp):
-        return x.to_pydatetime()
 
     if isinstance(x, (int, float, str, bool, datetime.date, datetime.datetime)):
         return x
 
     return str(x)
+
 
 
 def convert_df_to_snowflake_safe(df: pd.DataFrame) -> pd.DataFrame:
@@ -62,7 +64,7 @@ def missing_value_treatment_UDF(df: pd.DataFrame) -> pd.DataFrame:
     df["int_col"] = df["int_col"].fillna(0)
     df["float_col"] = df["float_col"].interpolate()
     df["bool_col"] = df["bool_col"].fillna(False)
-    df["date_col"] = pd.to_datetime(df["date_col"])
+    # df["date_col"] = pd.to_datetime(df["date_col"])
 
     # 🚨 MANDATORY FINAL STEP
     df = convert_df_to_snowflake_safe(df)
