@@ -6,7 +6,9 @@ conn = connect(
     user=os.environ['SNOWFLAKE_USER'],
     password=os.environ['SNOWFLAKE_PASSWORD'],
     account=os.environ['SNOWFLAKE_ACCOUNT'],
-    warehouse=os.environ['SNOWFLAKE_WAREHOUSE']
+    warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
+    database='ORANGE_ZONE_SBX_TA',  # hardcoded
+    schema='PUBLIC'       # hardcoded
 )
 cur = conn.cursor()
 
