@@ -64,6 +64,7 @@ for i, (task_name, sp_name) in enumerate(sp_tasks):
     cur.execute(sql)
 
 # Activate the first task
+cur.execute(f"SELECT SYSTEM$TASK_DEPENDENTS_ENABLE('{sp_tasks[0][0]}')")
 cur.execute(f"ALTER TASK {sp_tasks[0][0]} RESUME")
 
 print("Snowflake tasks created and pipeline activated!")
