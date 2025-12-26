@@ -14,7 +14,6 @@ PACKAGES = [
     "snowflake-snowpark-python",
     "pandas",
     "numpy",
-    "snowflake-connector-python",
     "snowflake-ml-python"
 ]
 
