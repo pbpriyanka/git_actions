@@ -1,5 +1,4 @@
 import os
-import glob
 from snowflake.connector import connect
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
@@ -30,21 +29,20 @@ conn = connect(
 cur = conn.cursor()
 
 # -----------------------------
-# Get SP names from scripts folder
+# List of SPs in execution order
 # -----------------------------
-SCRIPTS_DIR = "./scripts"
-scripts = glob.glob(os.path.join(SCRIPTS_DIR, "*.py"))
-
-# Extract base names without .py
-sp_names = [os.path.splitext(os.path.basename(p))[0] for p in scripts]
-
-# You can also create a task name by appending "_task"
-task_names = [f"{name}_task" for name in sp_names]
+sp_tasks = [
+    ('data_harmonization_task', 'data_harmonization'),
+    ('missing_value_task', 'missing_value'),
+    ('missing_dates_task', 'missing_dates'),
+    ('feature_engineering_task', 'feature_engineering'),
+    ('lasso_training_task', 'lasso_training')
+]
 
 # -----------------------------
 # Create tasks in sequence
 # -----------------------------
-for i, (task_name, sp_name) in enumerate(zip(task_names, sp_names)):
+for i, (task_name, sp_name) in enumerate(sp_tasks):
     if i == 0:
         # First task with schedule
         sql = f"""
@@ -55,7 +53,7 @@ for i, (task_name, sp_name) in enumerate(zip(task_names, sp_names)):
           CALL {sp_name}();
         """
     else:
-        prev_task = task_names[i-1]
+        prev_task = sp_tasks[i-1][0]
         sql = f"""
         CREATE OR REPLACE TASK {task_name}
           WAREHOUSE = {os.environ['SNOWFLAKE_WAREHOUSE']}
@@ -66,7 +64,7 @@ for i, (task_name, sp_name) in enumerate(zip(task_names, sp_names)):
     cur.execute(sql)
 
 # Activate the first task
-cur.execute(f"ALTER TASK {task_names[0]} RESUME")
+cur.execute(f"ALTER TASK {sp_tasks[0][0]} RESUME")
 
 print("Snowflake tasks created and pipeline activated!")
 
