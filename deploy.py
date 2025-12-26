@@ -88,20 +88,22 @@ $$
 # -----------------------------
 def deploy():
     session = get_snowflake_session()
-    # Set database and schema explicitly
     session.sql("USE DATABASE ORANGE_ZONE_SBX_TA").collect()
     session.sql("USE SCHEMA PUBLIC").collect()
 
     print("Snowflake session created\n")
 
+    deployed_sps = []
     scripts = glob.glob(os.path.join(SCRIPTS_DIR, "*.py"))
 
     for script_path in scripts:
         script_name = os.path.splitext(os.path.basename(script_path))[0]
         deploy_script(session, script_name, script_path)
+        deployed_sps.append(script_name)  # collect SP names
 
     session.close()
     print("All scripts deployed!")
+    return deployed_sps  # <-- added
 
 # -----------------------------
 # RUN LOCALLY
