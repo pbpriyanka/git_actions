@@ -78,7 +78,7 @@ $$
 $$
 """
     # Debug: print SQL before executing
-    print(sql)
+    # print(sql)
     session.sql(sql).collect()
     print(f"{script_name} deployed successfully!\n")
 
