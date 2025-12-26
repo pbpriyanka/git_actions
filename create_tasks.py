@@ -2,23 +2,27 @@ import os
 from snowflake.connector import connect
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
+from deploy import deploy  # import deploy.py
 
-# Load private key from environment variable (PEM format)
+# -----------------------------
+# Get SP names from deploy.py
+# -----------------------------
+sp_names = deploy()  # returns list like ['data_harmonization', 'missing_value', ...]
+
+# Optional: map to task names
+sp_tasks = [(f"{sp}_task", sp) for sp in sp_names]
+
+# -----------------------------
+# Connect to Snowflake
+# -----------------------------
 private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
-
-private_key = serialization.load_pem_private_key(
-    private_key_pem,
-    password=None,  # or password if your key is encrypted
-    backend=default_backend()
-)
-
+private_key = serialization.load_pem_private_key(private_key_pem, password=None, backend=default_backend())
 private_key_der = private_key.private_bytes(
     encoding=serialization.Encoding.DER,
     format=serialization.PrivateFormat.PKCS8,
     encryption_algorithm=serialization.NoEncryption()
 )
 
-# Connect to Snowflake using private key
 conn = connect(
     user=os.environ['SNOWFLAKE_USER'],
     account=os.environ['SNOWFLAKE_ACCOUNT'],
@@ -30,22 +34,15 @@ conn = connect(
 
 cur = conn.cursor()
 
-# List of SPs in execution order
-sp_tasks = [
-    ('data_harmonization_task', 'data_harmonization_sp'),
-    ('missing_value_task', 'missing_value_sp'),
-    # ('missing_dates_task', 'missing_dates'),
-    ('feature_eng_task', 'feat_eng_sp'),
-    ('training_task', 'training_sp')
-]
-
+# -----------------------------
+# Create tasks dynamically
+# -----------------------------
 for i, (task_name, sp_name) in enumerate(sp_tasks):
     if i == 0:
-        # First task needs a schedule
         sql = f"""
         CREATE OR REPLACE TASK {task_name}
           WAREHOUSE = {os.environ['SNOWFLAKE_WAREHOUSE']}
-          SCHEDULE = 'USING CRON * * * * * UTC'  -- every minute
+          SCHEDULE = 'USING CRON * * * * * UTC'
         AS
           CALL {sp_name}();
         """
@@ -60,7 +57,7 @@ for i, (task_name, sp_name) in enumerate(sp_tasks):
         """
     cur.execute(sql)
 
-# Activate the first task
+# Activate first task
 cur.execute(f"ALTER TASK {sp_tasks[0][0]} RESUME")
 
 print("Snowflake tasks created and pipeline activated!")
