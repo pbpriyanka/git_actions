@@ -27,6 +27,7 @@ conn = connect(
     user=os.environ['SNOWFLAKE_USER'],
     account=os.environ['SNOWFLAKE_ACCOUNT'],
     warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
+    role = os.environ["SNOWFLAKE_ROLE"],
     database='ORANGE_ZONE_SBX_TA',
     schema='PUBLIC',
     private_key=private_key_der
