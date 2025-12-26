@@ -89,7 +89,7 @@ def clean_script(script_path):
 def wrap_into_main(cleaned_code, dynamic_imports, notebook_name, output_path):
     imports_block = "\n".join(dynamic_imports)
     indented_code = "\n".join("    " + line if line.strip() else "" for line in cleaned_code)
-    final_script = f"{imports_block}\n\n# Notebook: {notebook_name}\n\ndef main():\n{indented_code}\n\nif __name__ == '__main__':\n    main()\n"
+    final_script = f"{imports_block}\n\n# Notebook: {notebook_name}\n\n"
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(final_script)
     return output_path
