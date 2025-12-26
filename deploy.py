@@ -93,13 +93,13 @@ def deploy():
             HANDLER = 'run_wrapper'
             EXECUTE AS OWNER
             AS
-            $$
-            from {module_name} import run
-
-            def run_wrapper(session):
-                run(session)
-                return "SUCCESS"
-            $$
+        $$
+        from {module_name} import run
+        
+        def run_wrapper(session):
+            run(session)
+            return "SUCCESS"
+        $$
         """).collect()
 
     session.close()
