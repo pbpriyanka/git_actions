@@ -50,9 +50,12 @@ def extract_code(cleaned_ipynb, notebook_name):
         ],
         check=True
     )
+
     # Databricks sometimes exports as .txt
-    if os.path.exists(output_py.replace(".py", ".txt")):
-        os.rename(output_py.replace(".py", ".txt"), output_py)
+    txt_path = output_py.replace(".py", ".txt")
+    if os.path.exists(txt_path):
+        os.rename(txt_path, output_py)
+
     return output_py
 
 # =========================================================
@@ -77,13 +80,64 @@ def clean_script(script_path):
     return lines
 
 # =========================================================
-# STEP 4: WRAP INTO RUN_WRAPPER FOR SNOWFLAKE
+# STEP 4: WRAP INTO RUN_WRAPPER WITH LOGGING
 # =========================================================
 def wrap_for_sproc(cleaned_lines, notebook_name):
-    """Wrap notebook code into run_wrapper(session)"""
-    header = "def run_wrapper(session):\n"
-    indented_code = textwrap.indent("".join(cleaned_lines), "    ")
-    footer = "\n    return 'SUCCESS'\n"
+    """
+    Wrap notebook code into run_wrapper(session)
+    Adds logging for both SUCCESS and FAILED cases
+    """
+    header = f"""
+import uuid
+
+def log_operation(session, status, error_message='', run_id=None, script_name=None):
+    if run_id is None:
+        run_id = str(uuid.uuid4())
+
+    created_at = session.sql(
+        "SELECT CURRENT_TIMESTAMP() AS created_at"
+    ).collect()[0]["CREATED_AT"]
+
+    log_df = session.create_dataframe([{
+        "run_id": run_id,
+        "script_name": script_name,
+        "status": status,
+        "error_message": error_message,
+        "created_at": created_at
+    }])
+
+    log_df.write.save_as_table(
+        "ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS",
+        mode="append"
+    )
+    return run_id
+
+
+def run_wrapper(session):
+    run_id = str(uuid.uuid4())
+    script_name = "{notebook_name}"
+    try:
+"""
+
+    indented_code = textwrap.indent("".join(cleaned_lines), "        ")
+
+    footer = """
+        return log_operation(
+            session=session,
+            status="SUCCESS",
+            run_id=run_id,
+            script_name=script_name
+        )
+    except Exception as e:
+        return log_operation(
+            session=session,
+            status="FAILED",
+            error_message=str(e),
+            run_id=run_id,
+            script_name=script_name
+        )
+"""
+
     return header + indented_code + footer
 
 # =========================================================
@@ -91,15 +145,20 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
 # =========================================================
 def convert_notebook(notebook_path):
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
+
     cleaned_ipynb = clean_databricks_metadata(notebook_path)
     script_path = extract_code(cleaned_ipynb, notebook_name)
     cleaned_lines = clean_script(script_path)
+
     final_code = wrap_for_sproc(cleaned_lines, notebook_name)
+
     output_path = os.path.join(SCRIPTS_DIR, notebook_name + ".py")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(final_code)
+
     os.remove(cleaned_ipynb)
-    print(f"✅ Converted notebook: {notebook_path} → {output_path}")
+
+    print(f"Converted notebook: {notebook_path} → {output_path}")
     return output_path
 
 # =========================================================
