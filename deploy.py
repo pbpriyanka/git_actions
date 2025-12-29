@@ -55,16 +55,9 @@ def prepare_script_for_sproc(script_path):
 # -----------------------------
 def deploy_script(session, script_name, script_path):
     print(f"Deploying stored procedure: {script_name}")
+
     script_content = prepare_script_for_sproc(script_path)
 
-    # Wrap the script in a run_wrapper function if needed
-    sproc_code = f"""
-def run_wrapper(session):
-{textwrap.indent(script_content, '    ')}
-    return "SUCCESS"
-"""
-
-    # Create SP
     sql = f"""
 CREATE OR REPLACE PROCEDURE {script_name}()
 RETURNS STRING
@@ -72,13 +65,12 @@ LANGUAGE PYTHON
 RUNTIME_VERSION = '3.11'
 PACKAGES = ({', '.join(f"'{p}'" for p in PACKAGES)})
 HANDLER = 'run_wrapper'
+EXECUTE AS CALLER
 AS
 $$
-{sproc_code}
+{script_content}
 $$
 """
-    # Debug: print SQL before executing
-    # print(sql)
     session.sql(sql).collect()
     print(f"{script_name} deployed successfully!\n")
 
