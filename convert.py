@@ -1,8 +1,4 @@
 def wrap_for_sproc(cleaned_lines, notebook_name):
-    """
-    Wrap notebook code into run_wrapper(session)
-    Adds logging for both SUCCESS and FAILED cases
-    """
     header = f"""
 import uuid
 
@@ -14,13 +10,13 @@ def log_operation(session, status, error_message='', run_id=None, script_name=No
         "SELECT CURRENT_TIMESTAMP() AS created_at"
     ).collect()[0]["CREATED_AT"]
 
-    log_df = session.create_dataframe([{{   # <-- escaped {{
+    log_df = session.create_dataframe([{{ 
         "run_id": run_id,
         "script_name": script_name,
         "status": status,
         "error_message": error_message,
         "created_at": created_at
-    }}])                                   # <-- escaped }}
+    }}])
 
     log_df.write.save_as_table(
         "ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS",
@@ -55,4 +51,4 @@ def run_wrapper(session):
         )
 """
 
-    return header + indented_code + footer
+    return textwrap.dedent(header + indented_code + footer)
