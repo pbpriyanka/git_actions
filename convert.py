@@ -26,6 +26,7 @@ def log_operation(session, status, error_message='', run_id=None, script_name=No
         "ORANGE_ZONE_SBX_TA.ML_MONITORING.OPERATION_LOGS",
         mode="append"
     )
+    session.sql("COMMIT").collect()
     return run_id
 
 
