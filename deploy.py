@@ -43,12 +43,8 @@ def get_snowflake_session():
 # CLEAN SCRIPT FOR SP
 # -----------------------------
 def prepare_script_for_sproc(script_path):
-    """Return script content properly dedented for Snowflake SP."""
-    with open(script_path, "r") as f:
-        content = f.read()
-    # Dedent everything to start at column 0
-    content = textwrap.dedent(content)
-    return content
+    with open(script_path, "r", encoding="utf-8") as f:
+        return f.read().lstrip()
 
 # -----------------------------
 # DEPLOY SP
