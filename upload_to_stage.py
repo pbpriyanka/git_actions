@@ -34,19 +34,30 @@ def upload_scripts_to_stage(scripts_folder="scripts", stage='@"ORANGE_ZONE_SBX_T
     session = get_snowflake_session()
     print("Snowflake session created successfully")
 
+    # Check if folder exists
+    if not os.path.exists(scripts_folder):
+        print(f"Scripts folder '{scripts_folder}' does not exist. Skipping upload.")
+        session.close()
+        return
+
+    files_uploaded = False
     for file in os.listdir(scripts_folder):
         if file.endswith(".py"):
+            files_uploaded = True
             local_path = os.path.join(scripts_folder, file)
             print(f"Uploading {local_path} → {stage}")
-            # session.file.put(f"file://{local_path}", stage, auto_compress=False, overwrite=True)
             session.file.put(
-    f"file://{os.path.abspath(local_path)}",
-    f'{stage}/{file}',
-    auto_compress=False,
-    overwrite=True
-)
+                f"file://{os.path.abspath(local_path)}",
+                f'{stage}/{file}',
+                auto_compress=False,
+                overwrite=True
+            )
 
-    print("All scripts uploaded to Snowflake stage successfully")
+    if not files_uploaded:
+        print(f"No Python scripts found in '{scripts_folder}'. Nothing uploaded.")
+    else:
+        print("All scripts uploaded to Snowflake stage successfully")
+
     session.close()
 
 
