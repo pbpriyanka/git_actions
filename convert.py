@@ -302,16 +302,39 @@ if __name__ == "__main__":
     return imports_block + "\n" + snowflake_core + main_def, main_footer
     
 # =========================================================
-# STEP 6: WRAP INTO FINAL SCRIPT
+# STEP 6: WRAP INTO FINAL SCRIPT 
 # =========================================================
 
 def wrap_into_main(cleaned_code, dynamic_imports, notebook_name, output_path):
     header, footer = build_dynamic_header(dynamic_imports, notebook_name)
-    indented_code = "\n".join("        " + line if line.strip() else "" for line in cleaned_code)
-    final_script = header + "\n" + indented_code + footer
+
+    # DO NOT indent raw code directly
+    logic_function = """
+def _notebook_logic(session):
+"""
+    logic_body = "\n".join(
+        "    " + line if line.strip() else ""
+        for line in cleaned_code
+    )
+
+    # Call the logic function safely
+    logic_call = """
+        _notebook_logic(session)
+"""
+
+    final_script = (
+        header
+        + logic_function
+        + logic_body
+        + logic_call
+        + footer
+    )
+
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(final_script)
+
     return output_path
+
 
 
 
