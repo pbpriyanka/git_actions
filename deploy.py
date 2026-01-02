@@ -5,6 +5,8 @@ import textwrap
 from snowflake.snowpark import Session
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
+import tempfile
+
 
 # -----------------------------
 # CONFIG
@@ -46,6 +48,27 @@ def prepare_script_for_sproc(script_path):
     with open(script_path, "r", encoding="utf-8") as f:
         return f.read().lstrip()
 
+def upload_code_to_stage(session, script_name, script_content,
+                         stage='@"ORANGE_ZONE_SBX_TA"."PUBLIC"."CONNECTIONS"'):
+    """
+    Uploads Python code directly to a Snowflake stage using a temp file
+    """
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as tmp:
+        tmp.write(script_content)
+        tmp_path = tmp.name
+
+    try:
+        print(f"Uploading {script_name}.py → {stage}")
+        session.file.put(
+            f"file://{tmp_path}",
+            f"{stage}/{script_name}.py",
+            auto_compress=False,
+            overwrite=True
+        )
+    finally:
+        os.remove(tmp_path)
+
+
 # -----------------------------
 # DEPLOY SP
 # -----------------------------
@@ -53,6 +76,9 @@ def deploy_script(session, script_name, script_path):
     print(f"Deploying stored procedure: {script_name}")
 
     script_content = prepare_script_for_sproc(script_path)
+
+    # Upload directly to stage
+    upload_code_to_stage(session, script_name, script_content)
 
     sql = f"""
 CREATE OR REPLACE PROCEDURE {script_name}()
@@ -69,6 +95,7 @@ $$
 """
     session.sql(sql).collect()
     print(f"{script_name} deployed successfully!\n")
+
 
 # -----------------------------
 # MAIN DEPLOY FUNCTION
