@@ -36,7 +36,8 @@ sp_tasks = [
     ('missing_value_task', 'missing_value'),
     ('missing_dates_task', 'missing_dates'),
     ('feature_engineering_task', 'feature_engineering'),
-    ('lasso_training_task', 'lasso_training')
+    ('lasso_training_task', 'lasso_training'),
+    ('final_model_selection_task','final_model_selection')
 ]
 
 # -----------------------------
