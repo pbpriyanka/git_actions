@@ -60,21 +60,49 @@ def extract_code(cleaned_ipynb, notebook_name):
 # =========================================================
 def clean_script(script_path):
     lines = []
-    session_patterns = [re.compile(r"^\s*session\s*=\s*get_active_session\(\s*\)")]
+
+    session_patterns = [
+        re.compile(r"^\s*session\s*=\s*get_active_session\(\s*\)")
+    ]
+
+    # Matches: final_df, joins_df, merged_data, etc.
+    bare_expr_pattern = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+
     with open(script_path, "r", encoding="utf-8") as f:
         for line in f:
-            s = line.strip()
-            if not s or s.startswith("#"):
+            stripped = line.strip()
+
+            # Skip empty lines & comments
+            if not stripped or stripped.startswith("#"):
                 continue
-            if s.startswith("import") or s.startswith("from"):
+
+            # Always keep imports
+            if stripped.startswith("import") or stripped.startswith("from"):
                 lines.append(line)
-            elif "display(" in s or "head(" in s:
                 continue
-            elif any(p.match(s) for p in session_patterns):
+
+            # Remove session creation
+            if any(p.match(stripped) for p in session_patterns):
                 continue
-            else:
-                lines.append(line)
+
+            # Remove notebook display helpers
+            if (
+                "display(" in stripped
+                or ".display()" in stripped
+                or ".show()" in stripped
+                or ".head(" in stripped
+            ):
+                continue
+
+            # 🔥 REMOVE BARE DATAFRAME EXPRESSIONS
+            if bare_expr_pattern.match(stripped):
+                continue
+
+            # Keep everything else
+            lines.append(line)
+
     return lines
+
 
 # =========================================================
 # STEP 4: WRAP INTO RUN_WRAPPER FOR SNOWFLAKE
