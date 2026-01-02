@@ -301,31 +301,27 @@ if __name__ == "__main__":
 """
     return imports_block + "\n" + snowflake_core + main_def, main_footer
     
-# =========================================================
-# STEP 6: WRAP INTO FINAL SCRIPT (CORRECT)
-# =========================================================
-
 def wrap_into_main(cleaned_code, dynamic_imports, notebook_name, output_path):
     header, footer = build_dynamic_header(dynamic_imports, notebook_name)
 
-    # Notebook logic lives in its OWN function
-    logic_fn_def = """
+    # Define notebook logic FIRST (top-level)
+    notebook_fn = """
 def _notebook_logic(session):
 """
-    logic_fn_body = "\n".join(
+    notebook_body = "\n".join(
         "    " + line if line.strip() else ""
         for line in cleaned_code
     )
 
-    # main() will only CALL notebook logic
+    # main() will call it inside try
     logic_call = """
         _notebook_logic(session)
 """
 
     final_script = (
         header
-        + logic_fn_def
-        + logic_fn_body
+        + notebook_fn
+        + notebook_body
         + logic_call
         + footer
     )
@@ -334,9 +330,6 @@ def _notebook_logic(session):
         f.write(final_script)
 
     return output_path
-
-
-
 
 # =========================================================
 # STEP 7: CONVERT ONE NOTEBOOK
