@@ -9,7 +9,7 @@ import tempfile
 
 
 # -----------------------------
-# CONFIG
+# CONFIG.
 # -----------------------------
 SCRIPTS_DIR = "./scripts"
 PACKAGES = [
