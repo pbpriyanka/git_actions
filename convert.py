@@ -32,8 +32,6 @@ def get_snowflake_session():
         "user": os.environ["SNOWFLAKE_USER"],
         "role": os.environ["SNOWFLAKE_ROLE"],
         "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
-        "database": os.environ.get("SNOWFLAKE_DATABASE"),
-        "schema": os.environ.get("SNOWFLAKE_SCHEMA"),
         "private_key": private_key_der
     }
     return Session.builder.configs(connection_parameters).create()
