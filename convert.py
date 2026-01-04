@@ -3,38 +3,13 @@ import re
 import nbformat
 import subprocess
 import textwrap
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
-from snowflake.snowpark import Session
+
 # =========================================================
 # CONFIG
 # =========================================================
 NOTEBOOK_DIR = "./notebooks"
 SCRIPTS_DIR = "./scripts"
-SNOWFLAKE_STAGE = "@ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS"  # replace with your stage name
 os.makedirs(SCRIPTS_DIR, exist_ok=True)
-
-# =========================================================
-# SNOWFLAKE SESSION
-# =========================================================
-def get_snowflake_session():
-    private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
-    private_key = serialization.load_pem_private_key(
-        private_key_pem, password=None, backend=default_backend()
-    )
-    private_key_der = private_key.private_bytes(
-        encoding=serialization.Encoding.DER,
-        format=serialization.PrivateFormat.PKCS8,
-        encryption_algorithm=serialization.NoEncryption()
-    )
-    connection_parameters = {
-        "account": os.environ["SNOWFLAKE_ACCOUNT"],
-        "user": os.environ["SNOWFLAKE_USER"],
-        "role": os.environ["SNOWFLAKE_ROLE"],
-        "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
-        "private_key": private_key_der
-    }
-    return Session.builder.configs(connection_parameters).create()
 
 # =========================================================
 # STEP 1: CLEAN DATABRICKS METADATA
@@ -112,16 +87,7 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
     return header + indented_code + footer
 
 # =========================================================
-# STEP 5: UPLOAD SCRIPT TO SNOWFLAKE STAGE
-# =========================================================
-def upload_to_stage(session, local_file_path):
-    filename = os.path.basename(local_file_path)
-    put_command = f"PUT file://{local_file_path} {SNOWFLAKE_STAGE} AUTO_COMPRESS=TRUE"
-    session.sql(put_command).collect()
-    print(f"Uploaded {filename} → {SNOWFLAKE_STAGE}")
-
-# =========================================================
-# STEP 6: CONVERT ONE NOTEBOOK
+# STEP 5: CONVERT ONE NOTEBOOK
 # =========================================================
 def convert_notebook(notebook_path):
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
@@ -134,19 +100,15 @@ def convert_notebook(notebook_path):
         f.write(final_code)
     os.remove(cleaned_ipynb)
     print(f"Converted notebook: {notebook_path} → {output_path}")
-    # Upload to Snowflake stage
-    upload_to_stage(session, output_path)
     return output_path
 
 # =========================================================
 # STEP 6: CONVERT ALL NOTEBOOKS
 # =========================================================
 def convert_all_notebooks():
-    session = get_snowflake_session()
     for f in os.listdir(NOTEBOOK_DIR):
         if f.endswith(".ipynb"):
-            convert_notebook(os.path.join(NOTEBOOK_DIR, f), session)
-    session.close()
+            convert_notebook(os.path.join(NOTEBOOK_DIR, f))
 
 if __name__ == "__main__":
     convert_all_notebooks()
