@@ -79,12 +79,61 @@ def clean_script(script_path):
 # =========================================================
 # STEP 4: WRAP INTO RUN_WRAPPER FOR SNOWFLAKE
 # =========================================================
+# def wrap_for_sproc(cleaned_lines, notebook_name):
+#     """Wrap notebook code into run_wrapper(session)"""
+#     header = "def run_wrapper(session):\n"
+#     indented_code = textwrap.indent("".join(cleaned_lines), "    ")
+#     footer = "\n    return 'SUCCESS'\n"
+#     return header + indented_code + footer
+
+import uuid
+import time
+import textwrap
+
+# =========================================================
+# STEP 4 (UPDATED): WRAP INTO RUN_WRAPPER WITH LOGGING
+# =========================================================
 def wrap_for_sproc(cleaned_lines, notebook_name):
-    """Wrap notebook code into run_wrapper(session)"""
-    header = "def run_wrapper(session):\n"
-    indented_code = textwrap.indent("".join(cleaned_lines), "    ")
-    footer = "\n    return 'SUCCESS'\n"
+    """
+    Wrap notebook code into run_wrapper(session) with try/except
+    and standard logging fields:
+        run_id, script_name, warehouse, execution_time, status, error_message
+    """
+    header = f"""def run_wrapper(session):
+    import time
+    import uuid
+
+    run_id = str(uuid.uuid4())
+    script_name = "{notebook_name}"
+    warehouse = session.sql("select current_warehouse()").collect()[0][0]
+    execution_time = None
+    status = "SUCCESS"
+    error_message = None
+
+    start_time = time.time()
+    try:
+"""
+    # Indent notebook code 2 levels (4 spaces per level)
+    indented_code = textwrap.indent("".join(cleaned_lines), "        ")
+
+    footer = """
+    except Exception as e:
+        status = "FAILURE"
+        error_message = str(e)
+        raise RuntimeError(f"Script {script_name} failed: {error_message}") from e
+    finally:
+        execution_time = time.time() - start_time
+        session.sql(f\"\"\"
+            INSERT INTO execution_log (
+                run_id, script_name, warehouse, execution_time, status, error_message
+            ) VALUES (
+                '{run_id}', '{script_name}', '{warehouse}', {execution_time}, '{status}', '{error_message}'
+            )
+        \"\"\").collect()
+    return status
+"""
     return header + indented_code + footer
+
 
 # =========================================================
 # STEP 5: CONVERT ONE NOTEBOOK
