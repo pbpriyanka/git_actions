@@ -25,6 +25,12 @@ jobs:
       # Convert notebooks → logic scripts
       - name: Convert notebooks
         run: python convert.py
+        
+      - name: Export Git metadata
+        run: 
+          echo "GIT_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "GIT_BRANCH=$(git branch --show-current)" >> $GITHUB_ENV
+          echo "GIT_REPO=${{ github.repository }}" >> $GITHUB_ENV
 
       # # Upload logic to Snowflake stage
       # - name: Upload scripts
