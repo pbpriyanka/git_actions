@@ -93,15 +93,24 @@ import textwrap
 # =========================================================
 # STEP 4 (UPDATED): WRAP INTO RUN_WRAPPER WITH LOGGING
 # =========================================================
+import uuid
+import time
+import textwrap
+from datetime import datetime
+
+# =========================================================
+# STEP 4 (UPDATED): WRAP INTO RUN_WRAPPER WITH LOGGING + created_at
+# =========================================================
 def wrap_for_sproc(cleaned_lines, notebook_name):
     """
     Wrap notebook code into run_wrapper(session) with try/except
     and standard logging fields:
-        run_id, script_name, warehouse, execution_time, status, error_message
+        run_id, script_name, warehouse, execution_time, status, error_message, created_at
     """
     header = f"""def run_wrapper(session):
     import time
     import uuid
+    from datetime import datetime
 
     run_id = str(uuid.uuid4())
     script_name = "{notebook_name}"
@@ -109,11 +118,12 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
     execution_time = None
     status = "SUCCESS"
     error_message = None
+    created_at = datetime.utcnow()
 
     start_time = time.time()
     try:
 """
-    # Indent notebook code 2 levels (4 spaces per level)
+    # Indent notebook code 2 levels (8 spaces)
     indented_code = textwrap.indent("".join(cleaned_lines), "        ")
 
     footer = """
@@ -125,14 +135,15 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
         execution_time = time.time() - start_time
         session.sql(f\"\"\"
             INSERT INTO execution_log (
-                run_id, script_name, warehouse, execution_time, status, error_message
+                run_id, script_name, warehouse, execution_time, status, error_message, created_at
             ) VALUES (
-                '{run_id}', '{script_name}', '{warehouse}', {execution_time}, '{status}', '{error_message}'
+                '{run_id}', '{script_name}', '{warehouse}', {execution_time}, '{status}', '{error_message}', '{created_at}'
             )
         \"\"\").collect()
     return status
 """
     return header + indented_code + footer
+
 
 
 # =========================================================
