@@ -38,7 +38,7 @@ sp_tasks = [
     ('feature_engineering_task', 'feature_engineering'),
     ('lasso_training_task', 'lasso_training'),
     ('final_model_selection_task','final_model_selection'),
-    ('register_model','register_task')
+    ('register_task','register_model')
 ]
 
 # -----------------------------
