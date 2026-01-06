@@ -1,0 +1,69 @@
+name: Test YAML upload to Snowflake stage
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "notebooks/config_new_PROD.yaml"
+
+jobs:
+  test-yaml-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate YAML file exists
+        run: |
+          ls -l notebooks/config_new_PROD.yaml
+
+      - name: Install SnowSQL
+        run: |
+          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.30-linux_x86_64.bash
+          bash snowsql-1.2.30-linux_x86_64.bash
+
+      - name: Configure SnowSQL
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_DATABASE: ORANGE_ZONE_SBX_TA
+          SNOWFLAKE_SCHEMA: PUBLIC
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.snowsql
+          cat <<EOF > ~/.snowsql/config
+          [connections.ci]
+          accountname = $SNOWFLAKE_ACCOUNT
+          username = $SNOWFLAKE_USER
+          role = $SNOWFLAKE_ROLE
+          warehouse = $SNOWFLAKE_WAREHOUSE
+          dbname = $SNOWFLAKE_DATABASE
+          schemaname = $SNOWFLAKE_SCHEMA
+          authenticator = snowflake_jwt
+          private_key = $SNOWFLAKE_PRIVATE_KEY
+          EOF
+
+      - name: Upload YAML to Snowflake stage (TEST)
+        run: |
+          snowsql -c ci -q "
+          PUT file://notebooks/config_new_PROD.yaml
+          @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml
+          AUTO_COMPRESS=FALSE
+          OVERWRITE=TRUE;
+          "
+
+      - name: Verify file exists in stage
+        run: |
+          snowsql -c ci -q "
+          LIST @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS;
+          "
+
+      - name: Read YAML from stage
+        run: |
+          snowsql -c ci -q "
+          SELECT $1
+          FROM @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml;
+          "
