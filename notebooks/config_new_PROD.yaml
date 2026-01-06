@@ -1,4 +1,3 @@
-
 data_harmonization_inputs:
   regions : ["MI-01","NY-01"]
   min_year : 2022
