@@ -1,9 +1,9 @@
 name: Snowflake ML Pipeline
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  # push:
+  #   branches: [ main ]
+  # workflow_dispatch:
 
 jobs:
   deploy-and-run:
