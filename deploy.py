@@ -16,7 +16,8 @@ PACKAGES = [
     "snowflake-snowpark-python",
     "pandas",
     "numpy",
-    "snowflake-ml-python"
+    "snowflake-ml-python",
+    "holidays"
 ]
 
 # -----------------------------
