@@ -193,19 +193,19 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
         execution_time = time.time() - start_time
     
         session.sql("""
-            INSERT INTO execution_log (
-                run_id, script_name, warehouse, execution_time, status, error_message, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (
-            run_id,
-            script_name,
-            warehouse,
-            execution_time,
-            status,
-            error_message,
-            created_at
-        )).collect()
-    return status
+        INSERT INTO execution_log (
+            run_id, script_name, warehouse, execution_time, status, error_message, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (
+        run_id,
+        script_name,
+        warehouse,
+        execution_time,
+        status,
+        error_message,
+        created_at
+    )).collect()
+        return status
 """
     return header + indented_code + footer
 
