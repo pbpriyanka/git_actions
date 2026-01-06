@@ -29,7 +29,7 @@ def get_snowflake_session():
 # -----------------------------
 # UPLOAD YAML FILE
 # -----------------------------
-def upload_yaml_to_stage(session, yaml_path, stage='@"ORANGE_ZONE_SBX_TA"."PUBLIC"."CONNECTIONS"'):
+def upload_yaml_to_stage(session, yaml_path, stage='@"ORANGE_ZONE_SBX_TA"."PUBLIC"."MY_CSV_STAGE"'):
     with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as tmp:
         with open(yaml_path, "r") as f:
             tmp.write(f.read())
