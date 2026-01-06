@@ -32,15 +32,17 @@ jobs:
           echo "GIT_BRANCH=$(git branch --show-current)" >> $GITHUB_ENV
           echo "GIT_REPO=${{ github.repository }}" >> $GITHUB_ENV
 
-      # # Upload logic to Snowflake stage
-      # - name: Upload scripts
-      #   env:
-      #     SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      #     SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      #     SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-      #     SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      #     SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-      #   run: python upload_to_stage.py
+      # -------------------------------
+      # Upload YAML to Snowflake stage
+      # -------------------------------
+      - name: Upload YAML to Snowflake stage
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: python push_yaml_to_stage.py
 
       #  Deploy stored procedures
       - name: Deploy Snowflake stored procedures
