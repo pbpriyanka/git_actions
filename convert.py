@@ -3,6 +3,10 @@ import re
 import nbformat
 import subprocess
 import textwrap
+from snowflake.snowpark import Session
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
+import tempfile
 
 # ========================================================
 # CONFIG
