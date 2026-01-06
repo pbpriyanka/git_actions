@@ -1,62 +1,62 @@
-name: Snowflake ML Pipeline
+# name: Snowflake ML Pipeline
 
-on:
-  # push:
-  #   branches: [ main ]
-  # workflow_dispatch:
+# on:
+#   push:
+#     branches: [ main ]
+#   workflow_dispatch:
 
-jobs:
-  deploy-and-run:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy-and-run:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+#       - name: Install dependencies
+#         run: |
+#           pip install --upgrade pip
+#           pip install -r requirements.txt
 
-      # Convert notebooks → logic scripts
-      - name: Convert notebooks
-        run: python convert.py
+#       # Convert notebooks → logic scripts
+#       - name: Convert notebooks
+#         run: python convert.py
         
-      - name: Export Git metadata
-        run: 
-          echo "GIT_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
-          echo "GIT_BRANCH=$(git branch --show-current)" >> $GITHUB_ENV
-          echo "GIT_REPO=${{ github.repository }}" >> $GITHUB_ENV
+#       - name: Export Git metadata
+#         run: 
+#           echo "GIT_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
+#           echo "GIT_BRANCH=$(git branch --show-current)" >> $GITHUB_ENV
+#           echo "GIT_REPO=${{ github.repository }}" >> $GITHUB_ENV
 
-      # # Upload logic to Snowflake stage
-      # - name: Upload scripts
-      #   env:
-      #     SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      #     SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      #     SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-      #     SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      #     SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-      #   run: python upload_to_stage.py
+#       # # Upload logic to Snowflake stage
+#       # - name: Upload scripts
+#       #   env:
+#       #     SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+#       #     SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+#       #     SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+#       #     SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+#       #     SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+#       #   run: python upload_to_stage.py
 
-      #  Deploy stored procedures
-      - name: Deploy Snowflake stored procedures
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-        run: python deploy.py
+#       #  Deploy stored procedures
+#       - name: Deploy Snowflake stored procedures
+#         env:
+#           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+#           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+#           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+#           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+#           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+#         run: python deploy.py
 
-      # Create / resume tasks
-      - name: Create Snowflake tasks
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-        run: python create_tasks.py
+#       # Create / resume tasks
+#       - name: Create Snowflake tasks
+#         env:
+#           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+#           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+#           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+#           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+#         run: python create_tasks.py
