@@ -9,6 +9,7 @@ numpy<2.0
 pyarrow>=14.0.1
 scipy
 scikit-learn
+holidays
 
 # Snowflake (aligned)
 snowflake-snowpark-python==1.44.0
