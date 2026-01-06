@@ -10,7 +10,7 @@ general_inputs :
   date_format_pandas : "yyyy-MM-dd"
   modeling_granularity : ["REGIONNAME","F_CODE"]
   output_database : ORANGE_ZONE_SBX_TA
-  output_schema : PROD_TABLES
+  output_schema : PUBLIC
 
 data_processing :
   outlier_treatment_needed : yes #yes/no
