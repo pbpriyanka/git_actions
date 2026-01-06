@@ -121,6 +121,9 @@ def clean_script(script_path):
             s = line.strip()
             if not s or s.startswith("#"):
                 continue
+            if s.startswith("import streamlit") or s.startswith("from streamlit"):
+                # Skip streamlit imports
+                continue
             if s.startswith("import") or s.startswith("from"):
                 lines.append(line)
             elif "display(" in s or "head(" in s:
