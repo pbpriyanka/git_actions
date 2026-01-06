@@ -30,23 +30,15 @@ def get_snowflake_session():
 # UPLOAD YAML FILE
 # -----------------------------
 def upload_yaml_to_stage(session, yaml_path, stage='@"ORANGE_ZONE_SBX_TA"."PUBLIC"."MY_CSV_STAGE"'):
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as tmp:
-        with open(yaml_path, "r") as f:
-            tmp.write(f.read())
-        tmp_path = tmp.name
+    stage_file_path = f"{stage}/{os.path.basename(yaml_path)}"
+    print(f"Uploading {yaml_path} → {stage_file_path}")
 
-    try:
-        # Use the final filename in stage explicitly
-        stage_file_path = f"{stage}/{os.path.basename(yaml_path)}"
-        print(f"Uploading {yaml_path} → {stage_file_path}")
-        session.file.put(
-            f"file://{tmp_path}",
-            stage_file_path,
-            auto_compress=False,
-            overwrite=True
-        )
-    finally:
-        os.remove(tmp_path)
+    session.file.put(
+        f"file://{yaml_path}",
+        stage_file_path,
+        auto_compress=False,
+        overwrite=True
+    )
 
 
 # -----------------------------
