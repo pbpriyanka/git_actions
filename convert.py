@@ -35,6 +35,37 @@ def get_snowflake_session():
     }
     return Session.builder.configs(connection_parameters).create()
 
+def replace_yaml_with_stage(script_path, stage_path):
+    """
+    Replaces YAML file loading in the script with Snowflake stage loading.
+    
+    Args:
+        script_path (str): Path to the Python script (.py)
+        stage_path (str): Full Snowflake stage path for the YAML file
+    """
+    with open(script_path, "r", encoding="utf-8") as f:
+        code = f.read()
+
+    # Regex pattern to find the original YAML loading block
+    pattern = re.compile(
+        r'import yaml\s*\nwith open\(["\']config_new_PROD\.yaml["\']\) as file:\s*app_config\s*=\s*yaml\.safe_load\(file\)',
+        re.MULTILINE
+    )
+
+    replacement = f"""import yaml
+stage_path = "{stage_path}"
+stream = session.file.get_stream(stage_path)
+yaml_text = stream.read().decode()
+app_config = yaml.safe_load(yaml_text)"""
+
+    new_code = pattern.sub(replacement, code)
+
+    with open(script_path, "w", encoding="utf-8") as f:
+        f.write(new_code)
+
+    print(f"Replaced YAML loading in {script_path}")
+
+
 # =========================================================
 # STEP 1: CLEAN DATABRICKS METADATA
 # =========================================================
@@ -191,6 +222,10 @@ def convert_notebook(notebook_path):
     os.remove(cleaned_ipynb)
     print(f"Converted notebook: {notebook_path} → {output_path}")
     upload_to_stage(session, output_path)
+    replace_yaml_with_stage(
+        output_path,
+        "@ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml"
+    )
     return output_path
 
 # =========================================================
