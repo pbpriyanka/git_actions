@@ -174,7 +174,7 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
 def upload_to_stage(session, script_path):
     stage_path = f"{STAGE_NAME}/{os.path.basename(script_path)}"
     print(f"Uploading {script_path} → {stage_path}")
-    session.file.put(f"file://{script_path}", stage_path, overwrite=True)
+    session.file.put(f"file://{script_path}", STAGE_NAME,auto_compress=False, overwrite=True)
 
 # =========================================================
 # STEP 6: CONVERT ONE NOTEBOOK
