@@ -191,13 +191,20 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
         raise RuntimeError(f"Script {script_name} failed: {error_message}") from e
     finally:
         execution_time = time.time() - start_time
-        session.sql(f\"\"\"
+    
+        session.sql("""
             INSERT INTO execution_log (
                 run_id, script_name, warehouse, execution_time, status, error_message, created_at
-            ) VALUES (
-                '{run_id}', '{script_name}', '{warehouse}', {execution_time}, '{status}', '{error_message}', '{created_at}'
-            )
-        \"\"\").collect()
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (
+            run_id,
+            script_name,
+            warehouse,
+            execution_time,
+            status,
+            error_message,
+            created_at
+        )).collect()
     return status
 """
     return header + indented_code + footer
