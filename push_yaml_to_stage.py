@@ -36,15 +36,18 @@ def upload_yaml_to_stage(session, yaml_path, stage='@"ORANGE_ZONE_SBX_TA"."PUBLI
         tmp_path = tmp.name
 
     try:
-        print(f"Uploading {yaml_path} → {stage}")
+        # Use the final filename in stage explicitly
+        stage_file_path = f"{stage}/{os.path.basename(yaml_path)}"
+        print(f"Uploading {yaml_path} → {stage_file_path}")
         session.file.put(
             f"file://{tmp_path}",
-            f"{stage}/{os.path.basename(yaml_path)}",
+            stage_file_path,
             auto_compress=False,
             overwrite=True
         )
     finally:
         os.remove(tmp_path)
+
 
 # -----------------------------
 # MAIN FUNCTION
