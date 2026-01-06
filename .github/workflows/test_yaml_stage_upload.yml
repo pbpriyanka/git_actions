@@ -20,10 +20,13 @@ jobs:
         run: |
           ls -l notebooks/config_new_PROD.yaml
 
-      - name: Install SnowSQL via pip
+      - name: Install SnowSQL
         run: |
-          pip install snowflake-snowsql==1.2.30
+          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.3/linux_x86_64/snowsql-1.3.0-linux_x86_64.bash
+          bash snowsql-1.3.0-linux_x86_64.bash -b || true
+          echo "$HOME/snowsql/bin" >> $GITHUB_PATH
           snowsql --version
+
 
 
       - name: Configure SnowSQL
