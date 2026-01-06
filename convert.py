@@ -9,6 +9,7 @@ import textwrap
 # =========================================================
 NOTEBOOK_DIR = "./notebooks"
 SCRIPTS_DIR = "./scripts"
+STAGE_NAME = "@ORANGE_ZONE_SBX_TA.PUBLIC.MY_CSV_STAGE"  # Snowflake stage name
 os.makedirs(SCRIPTS_DIR, exist_ok=True)
 
 # =========================================================
@@ -144,10 +145,16 @@ def wrap_for_sproc(cleaned_lines, notebook_name):
 """
     return header + indented_code + footer
 
-
+# =========================================================
+# STEP 5: UPLOAD SCRIPT TO SNOWFLAKE STAGE
+# =========================================================
+def upload_to_stage(session, script_path):
+    stage_path = f"{STAGE_NAME}/{os.path.basename(script_path)}"
+    print(f"Uploading {script_path} → {stage_path}")
+    session.file.put(f"file://{script_path}", stage_path, overwrite=True)
 
 # =========================================================
-# STEP 5: CONVERT ONE NOTEBOOK
+# STEP 6: CONVERT ONE NOTEBOOK
 # =========================================================
 def convert_notebook(notebook_path):
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
@@ -160,10 +167,11 @@ def convert_notebook(notebook_path):
         f.write(final_code)
     os.remove(cleaned_ipynb)
     print(f"Converted notebook: {notebook_path} → {output_path}")
+    upload_to_stage(session, output_path)
     return output_path
 
 # =========================================================
-# STEP 6: CONVERT ALL NOTEBOOKS
+# STEP 7: CONVERT ALL NOTEBOOKS
 # =========================================================
 def convert_all_notebooks():
     for f in os.listdir(NOTEBOOK_DIR):
