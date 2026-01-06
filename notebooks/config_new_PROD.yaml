@@ -170,4 +170,4 @@ qc_checks :
   base_trends_check_needed : yes
   trend_slope_cut_off : 0.1
 
-  latest_q_base_check_needed : yes
+  latest_q_base_check_needed : no
