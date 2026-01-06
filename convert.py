@@ -12,6 +12,25 @@ SCRIPTS_DIR = "./scripts"
 STAGE_NAME = "@ORANGE_ZONE_SBX_TA.PUBLIC.MY_CSV_STAGE"  # Snowflake stage name
 os.makedirs(SCRIPTS_DIR, exist_ok=True)
 
+def get_snowflake_session():
+    private_key_pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
+    private_key = serialization.load_pem_private_key(
+        private_key_pem, password=None, backend=default_backend()
+    )
+    private_key_der = private_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption()
+    )
+    connection_parameters = {
+        "account": os.environ["SNOWFLAKE_ACCOUNT"],
+        "user": os.environ["SNOWFLAKE_USER"],
+        "role": os.environ["SNOWFLAKE_ROLE"],
+        "warehouse": os.environ["SNOWFLAKE_WAREHOUSE"],
+        "private_key": private_key_der
+    }
+    return Session.builder.configs(connection_parameters).create()
+
 # =========================================================
 # STEP 1: CLEAN DATABRICKS METADATA
 # =========================================================
@@ -179,4 +198,5 @@ def convert_all_notebooks():
             convert_notebook(os.path.join(NOTEBOOK_DIR, f))
 
 if __name__ == "__main__":
+    session = get_snowflake_session()
     convert_all_notebooks()
