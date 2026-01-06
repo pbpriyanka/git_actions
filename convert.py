@@ -226,18 +226,20 @@ def convert_notebook(notebook_path):
     notebook_name = os.path.splitext(os.path.basename(notebook_path))[0]
     cleaned_ipynb = clean_databricks_metadata(notebook_path)
     script_path = extract_code(cleaned_ipynb, notebook_name)
+    replace_yaml_with_stage(
+        script_path,
+        "@ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml"
+    )
+
     cleaned_lines = clean_script(script_path)
     final_code = wrap_for_sproc(cleaned_lines, notebook_name)
+
     output_path = os.path.join(SCRIPTS_DIR, notebook_name + ".py")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(final_code)
     os.remove(cleaned_ipynb)
     print(f"Converted notebook: {notebook_path} → {output_path}")
     upload_to_stage(session, output_path)
-    replace_yaml_with_stage(
-        output_path,
-        "@ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml"
-    )
     return output_path
 
 # =========================================================
