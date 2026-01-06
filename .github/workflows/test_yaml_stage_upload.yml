@@ -1,10 +1,12 @@
 name: Test YAML upload to Snowflake stage
 
 on:
-  workflow_dispatch:
+  
   push:
+    branches: [ main ]
     paths:
       - "notebooks/config_new_PROD.yaml"
+  workflow_dispatch:
 
 jobs:
   test-yaml-upload:
