@@ -1,11 +1,6 @@
 name: Test YAML upload to Snowflake stage
 
 on:
-  
-  push:
-    branches: [ main ]
-    paths:
-      - "notebooks/config_new_PROD.yaml"
   workflow_dispatch:
 
 jobs:
@@ -13,63 +8,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Validate YAML file exists
+        run: ls -l notebooks/config_new_PROD.yaml
+
+      - uses: snowflakedb/snowflake-cli-action@v2.0
+        with:
+          cli-version: "3.11.0"
+
+      - name: Test connection
         run: |
-          ls -l notebooks/config_new_PROD.yaml
-
-      - name: Install SnowSQL
-        run: |
-          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.3/linux_x86_64/snowsql-1.3.0-linux_x86_64.bash
-          bash snowsql-1.3.0-linux_x86_64.bash -b || true
-          echo "$HOME/snowsql/bin" >> $GITHUB_PATH
-          snowsql --version
-
-
-
-      - name: Configure SnowSQL
+          snow --version
+          snow connection test -x
         env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY}}
+
+      - name: Upload YAML to stage
+        run: snow stage put file://notebooks/config_new_PROD.yaml @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS --overwrite
+        env:
+          SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
           SNOWFLAKE_DATABASE: ORANGE_ZONE_SBX_TA
           SNOWFLAKE_SCHEMA: PUBLIC
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.snowsql
-          cat <<EOF > ~/.snowsql/config
-          [connections.ci]
-          accountname = $SNOWFLAKE_ACCOUNT
-          username = $SNOWFLAKE_USER
-          role = $SNOWFLAKE_ROLE
-          warehouse = $SNOWFLAKE_WAREHOUSE
-          dbname = $SNOWFLAKE_DATABASE
-          schemaname = $SNOWFLAKE_SCHEMA
-          authenticator = snowflake_jwt
-          private_key = $SNOWFLAKE_PRIVATE_KEY
-          EOF
-
-      - name: Upload YAML to Snowflake stage (TEST)
-        run: |
-          snowsql -c ci -q "
-          PUT file://notebooks/config_new_PROD.yaml
-          @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml
-          AUTO_COMPRESS=FALSE
-          OVERWRITE=TRUE;
-          "
 
       - name: Verify file exists in stage
-        run: |
-          snowsql -c ci -q "
-          LIST @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS;
-          "
+        run: snow stage list @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS
+        env:
+          SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
 
       - name: Read YAML from stage
-        run: |
-          snowsql -c ci -q "
-          SELECT $1
-          FROM @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml;
-          "
+        run: snow sql execute -q "SELECT $1 FROM @ORANGE_ZONE_SBX_TA.PUBLIC.CONNECTIONS/config_new_PROD.yaml;"
+        env:
+          SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY}}
