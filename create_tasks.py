@@ -32,7 +32,7 @@ cur = conn.cursor()
 # List of SPs in execution order
 # -----------------------------
 sp_tasks = [
-    # ('data_ingestion_task','data_ingestion'),
+    ('data_ingestion_task','data_ingestion'),
     # ('data_harmonization_task', 'data_harmonization'),
     # ('data_qc_task', 'data_qc'),
     # ('missing_value_task', 'missing_value'),
@@ -40,7 +40,7 @@ sp_tasks = [
     # ('feature_engineering_task', 'feature_engineering'),
     # ('lasso_training_task', 'lasso_training'),
     # ('final_model_selection_task','final_model_selection'),
-    ('register_model_task','register_model'),
+    # ('register_model_task','register_model'),
     # ('summary_report_task','summary_report')
 ]
 
