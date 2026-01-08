@@ -18,9 +18,9 @@ PACKAGES = [
     "numpy",
     "snowflake-ml-python",
     "holidays",
-    "evidently",
+    "evidently=0.3.3",
     "cloudpickle==3.1.1",
-    "pickle=0.3.3"
+    "pickle==4.0.0"
 ]
 
 # -----------------------------
