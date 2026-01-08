@@ -14,12 +14,13 @@ import tempfile
 SCRIPTS_DIR = "./scripts"
 PACKAGES = [
     "snowflake-snowpark-python",
-    "pandas==2.3.3",
+    "pandas",
     "numpy",
     "snowflake-ml-python",
     "holidays",
     "evidently",
-    "cloudpickle==3.1.1"
+    "cloudpickle==3.1.1",
+    "pickle=0.3.3"
 ]
 
 # -----------------------------
