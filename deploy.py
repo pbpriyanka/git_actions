@@ -16,9 +16,9 @@ PACKAGES = [
     "snowflake-snowpark-python",
     "pandas==2.3.3",
     "numpy",
-    "snowflake-ml-python==1.20.0",
+    "snowflake-ml-python",
     "holidays",
-    'evidently==0.3.3',
+    "evidently",
     "cloudpickle==3.1.1"
 ]
 
