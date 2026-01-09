@@ -87,7 +87,7 @@ def deploy_script(session, script_name, script_path):
 CREATE OR REPLACE PROCEDURE {script_name}()
 RETURNS STRING
 LANGUAGE PYTHON
-RUNTIME_VERSION = '3.11'
+RUNTIME_VERSION = '3.10.18'
 PACKAGES = ({', '.join(f"'{p}'" for p in PACKAGES)})
 EXTERNAL_ACCESS_INTEGRATIONS = (BLS_API_ACCESS_INTEGRATION)
 HANDLER = 'run_wrapper'
