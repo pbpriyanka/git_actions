@@ -14,7 +14,7 @@ import tempfile
 SCRIPTS_DIR = "./scripts"
 PACKAGES = [
     "snowflake-snowpark-python",
-    "pandas==2.3.2",
+    "pandas",
     "numpy==2.2.5",
     "snowflake-ml-python",
     "holidays",
