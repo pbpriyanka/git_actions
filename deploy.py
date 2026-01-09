@@ -12,15 +12,23 @@ import tempfile
 # CONFIG.
 # -----------------------------
 SCRIPTS_DIR = "./scripts"
-PACKAGES = [
-    "snowflake-snowpark-python",
-    "pandas",
-    "numpy==2.2.5",
-    "snowflake-ml-python",
-    "holidays",
-    "evidently",
-    "cloudpickle==3.1.1"
-]
+if script_name=="register_model":
+    PACKAGES = [
+        "snowflake-snowpark-python",
+        "pandas",
+        "numpy==2.2.5",
+        "snowflake-ml-python",
+        "cloudpickle==3.1.1"
+    ]
+else:
+    PACKAGES = [
+        "snowflake-snowpark-python",
+        "pandas",
+        "numpy",
+        "snowflake-ml-python",
+        "holidays",
+        "evidently==0.3.3"
+    ]
 
 # -----------------------------
 # SNOWFLAKE SESSION
