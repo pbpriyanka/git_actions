@@ -67,23 +67,24 @@ def upload_code_to_stage(session, script_name, script_content,
 # DEPLOY SP
 # -----------------------------
 def deploy_script(session, script_name, script_path):
-        if script_name=="register_model":
-            PACKAGES = [
-                "snowflake-snowpark-python",
-                "pandas",
-                "numpy==2.2.5",
-                "snowflake-ml-python",
-                "cloudpickle==3.1.1"
-            ]
-        else:
-            PACKAGES = [
-                "snowflake-snowpark-python",
-                "pandas",
-                "numpy",
-                "snowflake-ml-python",
-                "holidays",
-                "evidently==0.3.3"
-            ]
+    if script_name=="register_model":
+        PACKAGES = [
+            "snowflake-snowpark-python",
+            "pandas",
+            "numpy==2.2.5",
+            "snowflake-ml-python",
+            "cloudpickle==3.1.1"
+        ]
+    else:
+        PACKAGES = [
+            "snowflake-snowpark-python",
+            "pandas",
+            "numpy",
+            "snowflake-ml-python",
+            "holidays",
+            "evidently==0.3.3"
+        ]
+            
     print(f"Deploying stored procedure: {script_name}")
 
     script_content = prepare_script_for_sproc(script_path)
