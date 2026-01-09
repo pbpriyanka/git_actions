@@ -12,23 +12,6 @@ import tempfile
 # CONFIG.
 # -----------------------------
 SCRIPTS_DIR = "./scripts"
-if script_name=="register_model":
-    PACKAGES = [
-        "snowflake-snowpark-python",
-        "pandas",
-        "numpy==2.2.5",
-        "snowflake-ml-python",
-        "cloudpickle==3.1.1"
-    ]
-else:
-    PACKAGES = [
-        "snowflake-snowpark-python",
-        "pandas",
-        "numpy",
-        "snowflake-ml-python",
-        "holidays",
-        "evidently==0.3.3"
-    ]
 
 # -----------------------------
 # SNOWFLAKE SESSION
@@ -124,6 +107,23 @@ def deploy():
 
     for script_path in scripts:
         script_name = os.path.splitext(os.path.basename(script_path))[0]
+        if script_name=="register_model":
+            PACKAGES = [
+                "snowflake-snowpark-python",
+                "pandas",
+                "numpy==2.2.5",
+                "snowflake-ml-python",
+                "cloudpickle==3.1.1"
+            ]
+        else:
+            PACKAGES = [
+                "snowflake-snowpark-python",
+                "pandas",
+                "numpy",
+                "snowflake-ml-python",
+                "holidays",
+                "evidently==0.3.3"
+            ]
         deploy_script(session, script_name, script_path)
 
     session.close()
