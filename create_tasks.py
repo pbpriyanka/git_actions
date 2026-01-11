@@ -40,7 +40,7 @@ sp_tasks = [
     # ('feature_engineering_task', 'feature_engineering'),
     # ('lasso_training_task', 'lasso_training'),
     # ('final_model_selection_task','final_model_selection'),
-    # ('register_model_task','register_model'),
+    ('register_model_task','register_model'),
     # ('summary_report_task','summary_report')
 ]
 
