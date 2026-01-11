@@ -1,0 +1,2121 @@
+REPORT_YEAR:
+  name: REPORT_YEAR
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REPORT_QUARTER:
+  name: REPORT_QUARTER
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REPORT_MONTH:
+  name: REPORT_MONTH
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+START_OF_WEEK:
+  name: START_OF_WEEK
+  source_table: 'DIM_DATE'
+  description: 'The date for the start of the week'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONNAME:
+  name: REGIONNAME
+  source_table: 'DIM_STUDIO'
+  description: 'Contains code for different regions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+F_CODE:
+  name: F_CODE
+  source_table: 'DIM_STUDIO'
+  description: 'Code for Studio Group'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+YEAR_QUARTER:
+  name: YEAR_QUARTER
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+YEAR_MONTH:
+  name: YEAR_MONTH
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_JOINS:
+  name: PROMO_JOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through promotions. Identified through the presence of extra words or non standard words in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_PROMO_JOINS:
+  name: NON_PROMO_JOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined without using any promotions. Identified through the absence of extra words or non standard words in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NMF_PROMOJOINS:
+  name: NMF_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through NMF promotions. Identified through the presence of NMF in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_PROMOJOINS:
+  name: WINBACK_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through WINBACK promotions. Identified through the presence of WINBACK in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOJO_PROMOJOINS:
+  name: AOJO_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through AOJO promotions. Identified through the presence of AOJO in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_PROMOJOINS:
+  name: OTHER_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through a promotion. Identified through the presence of extra words which cannot be classified in other promo types in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_CORP_PROMOJOINS:
+  name: WINBACK_CORP_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through WINBACK CORP promotions. Identified through the presence of WINBACK CORP in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CORP_PROMOJOINS:
+  name: CORP_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through CORP promotions. Identified through the presence of CORP in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_PROMOJOINS:
+  name: PROMO_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through PROMO promotions. Identified through the presence of PROMO in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEWVEMBER_PROMOJOINS:
+  name: NEWVEMBER_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through NEWVEMBER promotions. Identified through the presence of NEWVEMBER in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DECEMBER_PROMOJOINS:
+  name: DECEMBER_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through DECEMBER promotions. Identified through the presence of DECEMBER in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FM_PROMOJOINS:
+  name: FM_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through FM promotions. Identified through the presence of FM in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SPRING_PROMOJOINS:
+  name: SPRING_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through SPRING promotions. Identified through the presence of SPRING in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FOUNDER_PROMOJOINS:
+  name: FOUNDER_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through FOUNDER promotions. Identified through the presence of FOUNDER in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FMF_PROMOJOINS:
+  name: FMF_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through FMF promotions. Identified through the presence of FMF in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOAO_PROMOJOINS:
+  name: AOAO_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through AOJO promotions. Identified through the presence of AOJO in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+KICK_START_PROMOJOINS:
+  name: KICK_START_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through KICK START promotions. Identified through the presence of KICK START in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FAO_PROMOJOINS:
+  name: FAO_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through FAO promotions. Identified through the presence of FAO in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SUMMER_PROMOJOINS:
+  name: SUMMER_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through SUMMER promotions. Identified through the presence of SUMMER in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+RR_PROMOJOINS:
+  name: RR_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through RR promotions. Identified through the presence of RR in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DSO_PROMOJOINS:
+  name: DSO_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through DSO promotions. Identified through the presence of DSO in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+P65_PROMOJOINS:
+  name: P65_PROMOJOINS
+  source_table: 'JOINS'
+  description: 'These are the number of members joined through 65+ promotions. Identified through the presence of 65+ in member descriptions'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_LEADS:
+  name: TOTAL_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Total number of Leads captured through the week'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_LEADS:
+  name: LOCAL_CAMPAIGN_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads with the campaign type as Local'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_LEADS:
+  name: REGIONAL_CAMPAIGN_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads with the campaign type as Regional'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_LEADS:
+  name: NATIONAL_CAMPAIGN_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads with the campaign type as National'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_LEADS:
+  name: NON_WEB_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads with the campaign type as Non Web'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_LEADS:
+  name: OTHER_CAMPAIGN_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads with the campaign type as Other'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_LEADS:
+  name: UNKNOWN_CAMPAIGN_LEADS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Leads where the campaign type is not specified'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+INTRO_BOOKINGS:
+  name: INTRO_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Intros booked through the week'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+INTROS_TAKEN:
+  name: INTROS_TAKEN
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of Intros taken through the week'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+MISSED_GUESTS:
+  name: MISSED_GUESTS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of missed guests'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CLOSES:
+  name: CLOSES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_LEADS'
+  description: 'Number of closes in the week'
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_SPEND:
+  name: SG_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_NO_OF_CLICKS:
+  name: SG_NO_OF_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_NO_OF_IMPRESSIONS:
+  name: SG_NO_OF_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: SG_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_WEBSITE_VIEWTHRU_CAPTURES:
+  name: SG_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: SG_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_WEBSITE_CLICKTHRU_CAPTURES:
+  name: SG_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: SG_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: SG_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_VIDEO_VIEWS:
+  name: SG_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SG_WEBSITE_VISITS:
+  name: SG_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NO_OF_ACTIVE_STUDIOS:
+  name: NO_OF_ACTIVE_STUDIOS
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+EXECUTION_YEAR_MONTH:
+  name: EXECUTION_YEAR_MONTH
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_SPEND:
+  name: LOCAL_CAMPAIGN_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_SPEND:
+  name: REGIONAL_CAMPAIGN_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_SPEND:
+  name: NATIONAL_CAMPAIGN_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_SPEND:
+  name: NON_WEB_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_SPEND:
+  name: OTHER_CAMPAIGN_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_SPEND:
+  name: UNKNOWN_CAMPAIGN_SPEND
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_IMPRESSIONS:
+  name: TOTAL_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_IMPRESSIONS:
+  name: LOCAL_CAMPAIGN_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_IMPRESSIONS:
+  name: REGIONAL_CAMPAIGN_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_IMPRESSIONS:
+  name: NATIONAL_CAMPAIGN_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_IMPRESSIONS:
+  name: NON_WEB_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_IMPRESSIONS:
+  name: OTHER_CAMPAIGN_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_IMPRESSIONS:
+  name: UNKNOWN_CAMPAIGN_IMPRESSIONS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_CLICKS:
+  name: TOTAL_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_CLICKS:
+  name: LOCAL_CAMPAIGN_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_CLICKS:
+  name: REGIONAL_CAMPAIGN_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_CLICKS:
+  name: NATIONAL_CAMPAIGN_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_CLICKS:
+  name: NON_WEB_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_CLICKS:
+  name: OTHER_CAMPAIGN_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_CLICKS:
+  name: UNKNOWN_CAMPAIGN_CLICKS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: TOTAL_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: LOCAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: REGIONAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: NATIONAL_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: NON_WEB_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: OTHER_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES:
+  name: UNKNOWN_CAMPAIGN_IN_PLATFORM_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_WEBSITE_VIEWTHRU_CAPTURES:
+  name: TOTAL_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES:
+  name: LOCAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES:
+  name: REGIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES:
+  name: NATIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_WEBSITE_VIEWTHRU_CAPTURES:
+  name: NON_WEB_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES:
+  name: OTHER_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES:
+  name: UNKNOWN_CAMPAIGN_WEBSITE_VIEWTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: TOTAL_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: LOCAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: REGIONAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: NATIONAL_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: NON_WEB_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: OTHER_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES:
+  name: UNKNOWN_CAMPAIGN_IN_PLATFORM_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_WEBSITE_CLICKTHRU_CAPTURES:
+  name: TOTAL_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES:
+  name: LOCAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES:
+  name: REGIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES:
+  name: NATIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_WEBSITE_CLICKTHRU_CAPTURES:
+  name: NON_WEB_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES:
+  name: OTHER_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES:
+  name: UNKNOWN_CAMPAIGN_WEBSITE_CLICKTHRU_CAPTURES
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: TOTAL_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: LOCAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: REGIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: NATIONAL_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: NON_WEB_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: OTHER_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS:
+  name: UNKNOWN_CAMPAIGN_WEBSITE_VIEWTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: TOTAL_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: LOCAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: REGIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: NATIONAL_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: NON_WEB_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: OTHER_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS:
+  name: UNKNOWN_CAMPAIGN_WEBSITE_CLICKTHRU_BOOKINGS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_VIDEO_VIEWS:
+  name: TOTAL_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_VIDEO_VIEWS:
+  name: LOCAL_CAMPAIGN_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_VIDEO_VIEWS:
+  name: REGIONAL_CAMPAIGN_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_VIDEO_VIEWS:
+  name: NATIONAL_CAMPAIGN_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_VIDEO_VIEWS:
+  name: NON_WEB_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_VIDEO_VIEWS:
+  name: OTHER_CAMPAIGN_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_VIDEO_VIEWS:
+  name: UNKNOWN_CAMPAIGN_VIDEO_VIEWS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_WEBSITE_VISITS:
+  name: TOTAL_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_WEBSITE_VISITS:
+  name: LOCAL_CAMPAIGN_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_WEBSITE_VISITS:
+  name: REGIONAL_CAMPAIGN_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_WEBSITE_VISITS:
+  name: NATIONAL_CAMPAIGN_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_WEBSITE_VISITS:
+  name: NON_WEB_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_WEBSITE_VISITS:
+  name: OTHER_CAMPAIGN_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_WEBSITE_VISITS:
+  name: UNKNOWN_CAMPAIGN_WEBSITE_VISITS
+  source_table: 'LMD_DAILYSNAPSHOTACTIVITY_ADS'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+YEAR:
+  name: YEAR
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+MONTH:
+  name: MONTH
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_LEADS_V2:
+  name: TOTAL_LEADS_V2
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DRIP_LEADS:
+  name: DRIP_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_LEADS:
+  name: OTHER_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_PAID_LEADS:
+  name: LOCAL_CAMPAIGN_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CAMPAIGN_PAID_LEADS:
+  name: REGIONAL_CAMPAIGN_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_PAID_LEADS:
+  name: NATIONAL_CAMPAIGN_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NON_WEB_PAID_LEADS:
+  name: NON_WEB_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_CAMPAIGN_PAID_LEADS:
+  name: OTHER_CAMPAIGN_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+UNKNOWN_CAMPAIGN_PAID_LEADS:
+  name: UNKNOWN_CAMPAIGN_PAID_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NULL_WEIGHTED_MEAN:
+  name: NULL_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NULL_MEAN:
+  name: NULL_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FMF_MEAN:
+  name: FMF_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FM_MEAN:
+  name: FM_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NMF_MEAN:
+  name: NMF_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_CORP_MEAN:
+  name: WINBACK_CORP_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CORP_MEAN:
+  name: CORP_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_MEAN:
+  name: WINBACK_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FAO_MEAN:
+  name: FAO_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DSO_MEAN:
+  name: DSO_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOJO_MEAN:
+  name: AOJO_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOAO_MEAN:
+  name: AOAO_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SUMMER_MEAN:
+  name: SUMMER_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DECEMBER_MEAN:
+  name: DECEMBER_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEWVEMBER_MEAN:
+  name: NEWVEMBER_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FOUNDER_MEAN:
+  name: FOUNDER_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+KICK_START_MEAN:
+  name: KICK_START_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SPRING_MEAN:
+  name: SPRING_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+P65_MEAN:
+  name: P65_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_MEAN:
+  name: PROMO_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+RR_MEAN:
+  name: RR_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_MEAN:
+  name: OTHER_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NULL_ACTIVE_STUDIOS_NORMALIZED:
+  name: NULL_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NULL_WEIGHTED_MEAN_STREAK:
+  name: NULL_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FIRST_NONZERO_WEEK:
+  name: FIRST_NONZERO_WEEK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NO_OF_NEW_JOINEES:
+  name: NO_OF_NEW_JOINEES
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_CPI:
+  name: REGIONAL_CPI
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONAL_UNEMPLOYMENT_RATE:
+  name: REGIONAL_UNEMPLOYMENT_RATE
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+HPI:
+  name: HPI
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_SPENDS_OVERALL:
+  name: TOTAL_SPENDS_OVERALL
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PRIMED_LEADS:
+  name: PRIMED_LEADS
+  source_table: 'LEAD_CAPTURE_DIM'
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_WEIGHTED_MEAN:
+  name: PROMO_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SUMMER_WEIGHTED_MEAN:
+  name: SUMMER_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOJO_WEIGHTED_MEAN:
+  name: AOJO_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEWVEMBER_WEIGHTED_MEAN:
+  name: NEWVEMBER_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+RR_WEIGHTED_MEAN:
+  name: RR_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_CORP_WEIGHTED_MEAN:
+  name: WINBACK_CORP_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DECEMBER_WEIGHTED_MEAN:
+  name: DECEMBER_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_WEIGHTED_MEAN:
+  name: OTHER_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOAO_WEIGHTED_MEAN:
+  name: AOAO_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FOUNDER_WEIGHTED_MEAN:
+  name: FOUNDER_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FMF_WEIGHTED_MEAN:
+  name: FMF_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NMF_WEIGHTED_MEAN:
+  name: NMF_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+KICK_START_WEIGHTED_MEAN:
+  name: KICK_START_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FM_WEIGHTED_MEAN:
+  name: FM_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DSO_WEIGHTED_MEAN:
+  name: DSO_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+P65_WEIGHTED_MEAN:
+  name: P65_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CORP_WEIGHTED_MEAN:
+  name: CORP_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_WEIGHTED_MEAN:
+  name: WINBACK_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FAO_WEIGHTED_MEAN:
+  name: FAO_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SPRING_WEIGHTED_MEAN:
+  name: SPRING_WEIGHTED_MEAN
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_WEIGHTED_MEAN_STREAK:
+  name: PROMO_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SUMMER_WEIGHTED_MEAN_STREAK:
+  name: SUMMER_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOJO_WEIGHTED_MEAN_STREAK:
+  name: AOJO_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEWVEMBER_WEIGHTED_MEAN_STREAK:
+  name: NEWVEMBER_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+RR_WEIGHTED_MEAN_STREAK:
+  name: RR_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_CORP_WEIGHTED_MEAN_STREAK:
+  name: WINBACK_CORP_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DECEMBER_WEIGHTED_MEAN_STREAK:
+  name: DECEMBER_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_WEIGHTED_MEAN_STREAK:
+  name: OTHER_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOAO_WEIGHTED_MEAN_STREAK:
+  name: AOAO_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FOUNDER_WEIGHTED_MEAN_STREAK:
+  name: FOUNDER_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FMF_WEIGHTED_MEAN_STREAK:
+  name: FMF_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NMF_WEIGHTED_MEAN_STREAK:
+  name: NMF_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+KICK_START_WEIGHTED_MEAN_STREAK:
+  name: KICK_START_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FM_WEIGHTED_MEAN_STREAK:
+  name: FM_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DSO_WEIGHTED_MEAN_STREAK:
+  name: DSO_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+P65_WEIGHTED_MEAN_STREAK:
+  name: P65_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CORP_WEIGHTED_MEAN_STREAK:
+  name: CORP_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_WEIGHTED_MEAN_STREAK:
+  name: WINBACK_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FAO_WEIGHTED_MEAN_STREAK:
+  name: FAO_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SPRING_WEIGHTED_MEAN_STREAK:
+  name: SPRING_WEIGHTED_MEAN_STREAK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FMF_ACTIVE_STUDIOS_NORMALIZED:
+  name: FMF_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NMF_ACTIVE_STUDIOS_NORMALIZED:
+  name: NMF_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FM_ACTIVE_STUDIOS_NORMALIZED:
+  name: FM_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+KICK_START_ACTIVE_STUDIOS_NORMALIZED:
+  name: KICK_START_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FOUNDER_ACTIVE_STUDIOS_NORMALIZED:
+  name: FOUNDER_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+RR_ACTIVE_STUDIOS_NORMALIZED:
+  name: RR_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_CORP_ACTIVE_STUDIOS_NORMALIZED:
+  name: WINBACK_CORP_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SUMMER_ACTIVE_STUDIOS_NORMALIZED:
+  name: SUMMER_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOJO_ACTIVE_STUDIOS_NORMALIZED:
+  name: AOJO_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEWVEMBER_ACTIVE_STUDIOS_NORMALIZED:
+  name: NEWVEMBER_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+OTHER_ACTIVE_STUDIOS_NORMALIZED:
+  name: OTHER_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+AOAO_ACTIVE_STUDIOS_NORMALIZED:
+  name: AOAO_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DSO_ACTIVE_STUDIOS_NORMALIZED:
+  name: DSO_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+PROMO_ACTIVE_STUDIOS_NORMALIZED:
+  name: PROMO_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+P65_ACTIVE_STUDIOS_NORMALIZED:
+  name: P65_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CORP_ACTIVE_STUDIOS_NORMALIZED:
+  name: CORP_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WINBACK_ACTIVE_STUDIOS_NORMALIZED:
+  name: WINBACK_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+FAO_ACTIVE_STUDIOS_NORMALIZED:
+  name: FAO_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+SPRING_ACTIVE_STUDIOS_NORMALIZED:
+  name: SPRING_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+DECEMBER_ACTIVE_STUDIOS_NORMALIZED:
+  name: DECEMBER_ACTIVE_STUDIOS_NORMALIZED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CHRISTMAS_DAY:
+  name: CHRISTMAS_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+CHRISTMAS_DAY_OBSERVED:
+  name: CHRISTMAS_DAY_OBSERVED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+COLUMBUS_DAY:
+  name: COLUMBUS_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+INDEPENDENCE_DAY:
+  name: INDEPENDENCE_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+INDEPENDENCE_DAY_OBSERVED:
+  name: INDEPENDENCE_DAY_OBSERVED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+JUNETEENTH_NATIONAL_INDEPENDENCE_DAY:
+  name: JUNETEENTH_NATIONAL_INDEPENDENCE_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+JUNETEENTH_NATIONAL_INDEPENDENCE_DAY_OBSERVED:
+  name: JUNETEENTH_NATIONAL_INDEPENDENCE_DAY_OBSERVED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LABOR_DAY:
+  name: LABOR_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+MARTIN_LUTHER_KING_JR_DAY:
+  name: MARTIN_LUTHER_KING_JR_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+MEMORIAL_DAY:
+  name: MEMORIAL_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEW_YEAR_S_DAY:
+  name: NEW_YEAR_S_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NEW_YEAR_S_DAY_OBSERVED:
+  name: NEW_YEAR_S_DAY_OBSERVED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+THANKSGIVING_DAY:
+  name: THANKSGIVING_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+VETERANS_DAY:
+  name: VETERANS_DAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+VETERANS_DAY_OBSERVED:
+  name: VETERANS_DAY_OBSERVED
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+WASHINGTON_S_BIRTHDAY:
+  name: WASHINGTON_S_BIRTHDAY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_LEADS_LAG1:
+  name: LOCAL_CAMPAIGN_LEADS_LAG1
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_LEADS_LAG2:
+  name: LOCAL_CAMPAIGN_LEADS_LAG2
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOCAL_CAMPAIGN_LEADS_LAG3:
+  name: LOCAL_CAMPAIGN_LEADS_LAG3
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_SPENDS_OVERALL_LAG1:
+  name: TOTAL_SPENDS_OVERALL_LAG1
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TOTAL_SPENDS_OVERALL_LAG2:
+  name: TOTAL_SPENDS_OVERALL_LAG2
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_LEADS_LEAD1:
+  name: NATIONAL_CAMPAIGN_LEADS_LEAD1
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+NATIONAL_CAMPAIGN_LEADS_LEAD2:
+  name: NATIONAL_CAMPAIGN_LEADS_LEAD2
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOG_NO_OF_NEW_JOINEES:
+  name: LOG_NO_OF_NEW_JOINEES
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+STATUS:
+  name: STATUS
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONNAME_SI_WEEKLY:
+  name: REGIONNAME_SI_WEEKLY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONNAME_SI_MONTHLY:
+  name: REGIONNAME_SI_MONTHLY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REGIONNAME_SI_QUARTERLY:
+  name: REGIONNAME_SI_QUARTERLY
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+REPORT_WEEK:
+  name: REPORT_WEEK
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TREND_MONTH:
+  name: TREND_MONTH
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TREND_QUARTER:
+  name: TREND_QUARTER
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+TREND_YEAR:
+  name: TREND_YEAR
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+LOAD_TS:
+  name: LOAD_TS
+  source_table: ''
+  description: ''
+  version: '1.0'
+  owner: TA
+  created_at: '2025-12-30'
+  considered_for_modeling: ''
+
