@@ -48,6 +48,7 @@ if __name__ == "__main__":
     session.sql("USE SCHEMA PUBLIC").collect()
 
     upload_yaml_to_stage(session, "./notebooks/config_new_PROD.yaml")
+    upload_yaml_to_stage(session, "./notebooks/feature_version_final.yml")
     print("YAML uploaded successfully!")
 
     session.close()
