@@ -69,19 +69,15 @@ def upload_code_to_stage(session, script_name, script_content,
 def deploy_script(session, script_name, script_path):
     if script_name=="register_model":
         PACKAGES = [
-            "snowflake-snowpark-python",
-            "pandas",
-            "numpy==2.2.5",
-            "snowflake-ml-python",
+            "snowflake-snowpark-python==1.44.0",
+            "snowflake-ml-python==4.1.1",
             "cloudpickle==3.1.1"
         ]
     else:
         PACKAGES = [
-            "snowflake-snowpark-python",
-            "pandas",
-            "numpy",
-            "snowflake-ml-python",
-            "holidays",
+            "snowflake-snowpark-python==1.44.0",
+            "snowflake-ml-python==4.1.1",
+            "holidays==0.88",
             "evidently==0.3.3"
         ]
             
