@@ -77,7 +77,7 @@ def deploy_script(session, script_name, script_path):
         PACKAGES = [
             "snowflake-snowpark-python==1.33.0",
             "snowflake-ml-python==1.20.0",
-            "holidays==0.88",
+            "holidays",
             "evidently==0.3.3"
         ]
             
