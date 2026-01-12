@@ -4,12 +4,12 @@ nbconvert==7.16.6
 jupyter==1.1.1
 
 # Core
-# pandas==2.1.4
-# numpy<2.0
-# pyarrow>=14.0.1
+pandas==2.1.4
+numpy==1.26.4
+pyarrow>=14.0.1
 # scikit-learn==1.7.2
 # holidays
 
 # Snowflake (aligned)
-snowflake-snowpark-python==1.44.0
-snowflake-connector-python==4.1.1
+# snowflake-snowpark-python==1.44.0
+# snowflake-connector-python==4.1.1
